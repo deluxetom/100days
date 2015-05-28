@@ -6,7 +6,7 @@ Welcome to the repository for the 100 day challenge website
 Development
 ----------------------------
 
-Clone the project to your computer, instal `Vagrant`_ and `VirtualBox`_
+Clone the project to your computer, install `Vagrant`_ and `VirtualBox`_
 
 .. code-block:: console
 
@@ -18,6 +18,9 @@ You will need to edit your hosts file to add:
 .. code-block:: console
 
     192.168.100.100 dev.100days.co
+
+
+Then access the website via http://dev.100days.co
 
 Enjoy!
 
