@@ -1,0 +1,27 @@
+{
+  "name": "100days.co",
+  "version": "0.1",
+  "homepage": "http://www.100days.co",
+  "authors": [
+    "Thomas Picquet <thomas@sctr.net>"
+  ],
+  "description": "100days.co website",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "100day",
+    "challenge"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "startbootstrap-sb-admin-2": "~1.0.7"
+  }
+}
