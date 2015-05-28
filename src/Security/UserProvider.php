@@ -3,7 +3,7 @@ namespace Days\Security;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\User;
+use Days\Security\User;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -20,26 +20,35 @@ class UserProvider implements UserProviderInterface
 
     public function loadUserByUsername($username)
     {
-        $stmt = $this->conn->executeQuery('SELECT * FROM users WHERE username = ?', array(strtolower($username)));
+        $stmt = $this->conn->executeQuery('SELECT * FROM user WHERE username = ?', array(strtolower($username)));
 
         if (!$user = $stmt->fetch()) {
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
         }
 
-        $user_roles = array_map(
-            function ($val) {
-                return 'ROLE_'.strtoupper(trim($val));
-            },
-            explode(',', $user['roles'])
-        );
-        $authorized_roles = array('ROLE_ADMIN', 'ROLE_ENCODER');
+        $user_roles = explode(',', $user['roles']);
+        $authorized_roles = array('ROLE_ADMIN', 'ROLE_USER');
         $roles = array_intersect($user_roles, $authorized_roles);
 
         if (count($roles) == 0) {
             throw new AccessDeniedException(sprintf('%s isn\'t allowed to access this area', $user['username']));
         }
 
-        return new User($user['username'], $user['password'], $roles, true, true, true, true);
+        $userApp = new User(
+            $user['username'],
+            $user['password'],
+            $user['salt'],
+            $user['email'],
+            $user['name'],
+            $user['userId'],
+            $roles,
+            true,
+            true,
+            true,
+            true
+        );
+
+        return $userApp;
     }
 
     public function refreshUser(UserInterface $user)

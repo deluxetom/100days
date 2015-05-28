@@ -3,7 +3,6 @@
 use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
 use Predis\Session\Handler;
-use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 //twig
 $app['twig.path'] = array(__DIR__.'/../src/View');
@@ -71,9 +70,6 @@ $app['security.firewalls'] = array(
         }),
     ),
 );
-$app['security.encoder.digest'] = $app->share(function ($app) {
-    return new MessageDigestPasswordEncoder('sha1', false, 1);
-});
 
 // enable the debug mode
 $app['debug'] = true;
