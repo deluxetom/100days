@@ -3,6 +3,7 @@
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\TwigServiceProvider;
+use Predis\Silex\ClientsServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\RememberMeServiceProvider;
@@ -19,6 +20,8 @@ $app->register(new RememberMeServiceProvider());
 $app->register(new UrlGeneratorServiceProvider());
 $app->register(new ValidatorServiceProvider());
 $app->register(new ServiceControllerServiceProvider());
+$app->register(new ClientsServiceProvider());
+
 $app['twig'] = $app->share($app->extend('twig', function ($twig, $app) {
     // globals
     $twig->addGlobal('sitename', '100 Day Challenge');

@@ -22,13 +22,15 @@
         "symfony/security": "~2.3",
         "symfony/translation": "~2.3",
         "symfony/twig-bridge": "~2.3",
-        "symfony/validator": "~2.3"
+        "symfony/validator": "~2.3",
+        "predis/predis": "~1.0",
+        "predis/service-provider": "1.0.0"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "~2.0"
     },
     "autoload": {
-        "psr-4": { "days\\": "src/" }
+        "psr-4": { "Days\\": "src/" }
     },
     "extra": {
         "branch-alias": {

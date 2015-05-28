@@ -282,7 +282,7 @@ mysql:
             sql: ''
     grants:
         mysqlng_0bsg0l8mko8x:
-            user: dbuser
+            user: 100days
             table: '*.*'
             privileges:
                 - ALL
