@@ -22,6 +22,7 @@
     "tests"
   ],
   "dependencies": {
-    "startbootstrap-sb-admin-2": "~1.0.7"
+    "startbootstrap-sb-admin-2": "~1.0.7",
+    "eonasdan-bootstrap-datetimepicker": "~4.7"
   }
 }

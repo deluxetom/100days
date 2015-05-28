@@ -1,5 +1,141 @@
 {% extends "layout.html.twig" %}
+{% set active_page = "dashboard" %}
+
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
-    Welcome to your new Silex Application!
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Log your daily activity
+            <div class="pull-right">
+                <a class="btn btn-xs btn-outline btn-danger" href="#">
+                    <i class="fa fa-fw fa-times"></i> Reset counter
+                </a>
+            </div>
+        </div>
+        <div class="panel-body" style="padding-top: 5px;">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <h3>Push ups</h3>
+                    <div class="btn-group center">
+                        <button type="button" class="btn btn-lg btn-success">0</button>
+                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 1</button>
+                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 5</button>
+                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 10</button>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <h3>Squats</h3>
+                    <div class="btn-group center">
+                        <button type="button" class="btn btn-lg btn-success">0</button>
+                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 1</button>
+                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 5</button>
+                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 10</button>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <h3>Jumping Jacks</h3>
+                    <div class="btn-group center">
+                        <button type="button" class="btn btn-lg btn-success">0</button>
+                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 1</button>
+                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 5</button>
+                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 10</button>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center">
+                    <h3>Sit ups</h3>
+                    <div class="btn-group center">
+                        <button type="button" class="btn btn-lg btn-success">0</button>
+                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 1</button>
+                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 5</button>
+                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 10</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Add your 100's
+        </div>
+        <div class="panel-body" style="padding-top: 5px;">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="nb">Number of 100s</label>
+                        <input type="text" class="form-control" id="nb" placeholder="1" value="1">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="start_date">Date</label>
+                        <div class='input-group date' id='dtpicker'>
+                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                            <input type='text' class="form-control" name="start_date" id="start_date" data-date-format="YYYY-MM-DD" value="2015-05-22" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="button">&nbsp;</label>
+                        <button type="button" class="btn btn-outline btn-success btn-md btn-block"><i class="fa fa-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            History
+        </div>
+        <div class="panel-body">
+            <div id="morris-area-chart"></div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block footerjs %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $('#dtpicker').datetimepicker({
+                maxDate: "2015-05-22",
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-arrow-up",
+                    down: "fa fa-arrow-down"
+                }
+            });
+
+
+            new Morris.Area({
+                element: 'morris-area-chart',
+                data: [
+                    { day: '2015-05-28', sets: 1 },
+                    { day: '2015-05-27', sets: 2 },
+                    { day: '2015-05-26', sets: 1 },
+                    { day: '2015-05-25', sets: 2 },
+                    { day: '2015-05-24', sets: 2 },
+                    { day: '2015-05-23', sets: 1 },
+                    { day: '2015-05-22', sets: 1 },
+                ],
+                pointSize: 3,
+                goalStrokeWidth: 0.7,
+                lineColors:['#c89d68'],
+                resize: false,
+                grid: true,
+                xkey: 'day',
+                xLabels: 'day',
+                ykeys: ['sets'],
+                labels: ['100s']
+            });
+
+        });
+    </script>
 {% endblock %}

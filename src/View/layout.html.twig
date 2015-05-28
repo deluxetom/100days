@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,13 +8,15 @@
     <meta name="author" content="">
     <link rel="icon" sizes="128x128" href="/icon.png">
     <link rel="apple-touch-icon" sizes="128x128" href="/icon.png">
-    <title>100 day challenge</title>
+    <title>{{ sitename }} | {% block title '' %}</title>
 
     {% block headcss %}
     <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
     <link href="/bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="/bower_components/morrisjs/morris.css" rel="stylesheet">
     <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="/css/main.css" rel="stylesheet" type="text/css">
     {% endblock %}
 
@@ -42,12 +43,12 @@
         <div class="collapse navbar-collapse">
             {% if app.security.token is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
             <ul class="nav navbar-nav">
-                <li class="active"><a href="{{ path('homepage') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
-                <li{% if active_page == 'stats' %} class="active" {% endif %}><a href="#"><i class="fa fa-sort-amount-asc fa-fw"></i> Leaderboards</a></li>
+                <li{% if active_page == 'dashboard' %} class="active" {% endif %}><a href="{{ path('homepage') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
+                <li{% if active_page == 'leaderboards' %} class="active" {% endif %}><a href="#"><i class="fa fa-sort-amount-asc fa-fw"></i> Leaderboards</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                <li class="dropdown active">
+                    <a class="dropdown-toggle active" data-toggle="dropdown" href="">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
@@ -72,9 +73,9 @@
 
 </div>
 
-<div class="navbar navbar-default navbar-static-bottom" style="margin-bottom: 0px">
+<div class="navbar navbar-default navbar-static-bottom" style="margin-bottom: 0px; margin-top: 50px;">
     <div class="container">
-        <p class="navbar-text pull-left">©2015 - Built by Thomas Picquet
+        <p class="navbar-text pull-left">©2015 - Built by <a href="https://github.com/thomaspicquet" target="_blank">Thomas Picquet</a>
         </p>
         <a href="http://www.trufaco.com" class="navbar-btn btn-link btn pull-right">
             <span class="glyphicon glyphicon-star"></span>  Trufaco.com</a>
@@ -84,9 +85,13 @@
 <!-- jQuery -->
 {% block footerjs %}
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/bower_components/moment/min/moment.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<script src="/bower_components/raphael/raphael-min.js"></script>
+<script src="/bower_components/morrisjs/morris.min.js"></script>
 <script src="/bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
+<script src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 {% endblock %}
 
 </body>
