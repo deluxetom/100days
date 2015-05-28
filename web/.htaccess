@@ -1,0 +1,9 @@
+Options -MultiViews
+
+RewriteEngine On
+RewriteRule ^index.php - [L]
+RewriteRule ^index_dev.php - [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteRule ^ /index.php [QSA,L]
+RewriteRule ^ /index_dev.php [QSA,L]
