@@ -2,6 +2,14 @@
 
 use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+
+//twig
+$app['twig.path'] = array(__DIR__.'/../src/View');
+$app['twig.options'] = array(
+    'cache' => __DIR__.'/../var/cache/twig',
+    'strict_variables' => false
+);
 
 // doctrine
 $app['dbs.options'] = array (
@@ -20,7 +28,7 @@ $app['security.firewalls'] = array(
     'profiler' => array('pattern' => '^/(_(profiler|wdt)|css|images|js)/'),
     'login' => array('pattern' => '^/login/$'),
     'default' => array(
-        'pattern' => '^.*$',
+        'pattern' => '^members',
         'remember_me' => array(
             'key'                => '100daychallenge',
             'always_remember_me' => true,
@@ -31,7 +39,7 @@ $app['security.firewalls'] = array(
         ),
         'logout' => array('logout_path' => '/logout'),
         'users' => $app->share(function () use ($app) {
-            return new Sctr\Encoder\Security\UserProvider($app['dbs']['videosz']);
+            return new days\Security\UserProvider($app['dbs']['100days']);
         }),
     ),
 );

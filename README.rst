@@ -20,6 +20,13 @@ You will need to edit your hosts file to add:
     192.168.100.100 dev.100days.co
 
 
+You will also need to download the dependencies via Composer and Bower
+
+.. code-block:: console
+
+    $ composer install
+    $ bower install
+
 Then access the website via http://dev.100days.co
 
 Enjoy!

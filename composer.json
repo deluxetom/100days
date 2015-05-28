@@ -28,7 +28,7 @@
         "squizlabs/php_codesniffer": "~2.0"
     },
     "autoload": {
-        "psr-4": { "100days\\Www\\": "src/" }
+        "psr-4": { "days\\": "src/" }
     },
     "extra": {
         "branch-alias": {
