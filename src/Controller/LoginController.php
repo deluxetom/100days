@@ -65,6 +65,15 @@ class LoginController implements ControllerProviderInterface
                     );
                     if ($user != false) {
                         $success[] = "Registration complete! You can now login.";
+                        $email_message = "Hi $name,\n\nYour registration to 100 Day Challenge is complete. You can now log in at http://www.100days.co using this information:\nUsername: $username\nPassword: $password\n\nThanks,\nThe 100 Day Challenge team";
+
+                        $smessage = \Swift_Message::newInstance()
+                            ->setSubject("100 Day Challenge Registration")
+                            ->setFrom(['registration@100days.co' => '100 Day Challenge'])
+                            ->setTo([$email => $name])
+                            ->setBody($email_message);
+
+                        $app['mailer']->send($smessage);
                         $name = '';
                         $email = '';
                         $action = 'login';

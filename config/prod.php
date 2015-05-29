@@ -68,3 +68,11 @@ $app['security.firewalls'] = array(
         }),
     ),
 );
+
+// swiftmail with mandril
+$app['swiftmailer.options'] = array(
+    'host' => 'smtp.mandrillapp.com',
+    'port' => '587',
+    'username' => 'thomas@sctr.net',
+    'password' => 'pGl9EPM5tI7b292Y5OU7Qg'
+);

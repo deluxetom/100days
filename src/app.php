@@ -10,6 +10,7 @@ use Silex\Provider\RememberMeServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
+use Silex\Provider\SwiftmailerServiceProvider;
 
 $app = new Application();
 $app->register(new DoctrineServiceProvider());
@@ -21,6 +22,7 @@ $app->register(new UrlGeneratorServiceProvider());
 $app->register(new ValidatorServiceProvider());
 $app->register(new ServiceControllerServiceProvider());
 $app->register(new ClientsServiceProvider());
+$app->register(new SwiftmailerServiceProvider());
 
 $app['twig'] = $app->share($app->extend('twig', function ($twig, $app) {
     // globals
