@@ -6,6 +6,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+$app->before(function () use ($app) {
+    if ($token = $app['security']->getToken()) {
+        $app['session']->start();
+        if (!$app['session']->get('name') || !$app['session']->get('timezone')) {
+            // get account's info > name, timezone etc (from an account repo)
+            $app['session']->set('userId', $token->getUser()->getId());
+            $app['session']->set('name', $token->getUser()->getName());
+            $app['session']->set('username', $token->getUser()->getUsername());
+        }
+    }
+});
 
 $app->get('/', function () use ($app) {
     return $app['twig']->render('index.html.twig', array());
@@ -13,6 +24,7 @@ $app->get('/', function () use ($app) {
 ->bind('homepage');
 
 $app->mount('/login', new Days\Controller\LoginController);
+$app->mount('/user', new Days\Controller\UserController);
 
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {

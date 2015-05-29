@@ -11,10 +11,10 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
-                            <a href="#" class="active" id="login-form-link">Login</a>
+                            <a href="#" {% if action == 'login' %}class="active"{% endif %} id="login-form-link">Login</a>
                         </div>
                         <div class="col-xs-6">
-                            <a href="#" id="register-form-link">Register</a>
+                            <a href="#" {% if action == 'register' %}class="active"{% endif %} id="register-form-link">Register</a>
                         </div>
                     </div>
                     <hr class="colorgraph"><br>
@@ -22,14 +22,22 @@
                 <div class="panel-body">
                     {% if error %}
                         <div class="alert alert-danger">
-                            <span class="glyphicon glyphicon-remove"></span><strong> {{ error }}</strong>
+                            <span class="glyphicon glyphicon-remove"></span><strong>
+                                {% if error is iterable %}
+                                {% for err in error %}
+                                {{ err }}<br />
+                                {% endfor %}
+                                {% else %}
+                                {{ error }}
+                                {% endif %}
+                            </strong>
                         </div>
                     {% endif %}
                     <div class="row">
                         <div class="col-lg-12">
-                            <form id="login-form" action="{{ path('login_check') }}" method="post" role="form" style="display: block;">
+                            <form id="login-form" action="{{ path('login_check') }}" method="post" role="form" style="display: {% if action == 'login' %}block{% else %}none{% endif %};">
                                 <div class="form-group">
-                                    <input type="text" name="_username" id="username" value="{{ last_username }}" tabindex="1" class="form-control" placeholder="Username" value="">
+                                    <input type="text" name="_username" id="username" value="{{ last_username }}" tabindex="1" class="form-control" placeholder="Username">
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="_password" id="password" tabindex="2" class="form-control" placeholder="Password">
@@ -55,18 +63,19 @@
                                     </div>
                                 </div>#}
                             </form>
-                            <form id="register-form" action="http://phpoll.com/register/process" method="post" role="form" style="display: none;">
+                            <form id="register-form" action="{{ path('login') }}" method="post" role="form" style="display: {% if action == 'register' %}block{% else %}none{% endif %};">
+                                <input type="hidden" name="action" id="action" value="register" />
                                 <div class="form-group">
-                                    <input type="text" name="name" id="name" tabindex="2" class="form-control" placeholder="Name">
+                                    <input type="text" name="name" id="name" tabindex="2" class="form-control" placeholder="Name" value="{{ name }}">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="{{ username }}">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="">
+                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="{{ email }}">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" value="{{ password }}">
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
