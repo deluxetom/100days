@@ -6,7 +6,19 @@
 {% block content %}
 
     <div class="panel panel-default">
-        {% if error %}
+        {% if success %}
+            <div class="alert alert-success">
+                <span class="glyphicon glyphicon-remove"></span><strong>
+                    {% if success is iterable %}
+                        {% for suc in success %}
+                            {{ suc }}<br />
+                        {% endfor %}
+                    {% else %}
+                        {{ success }}
+                    {% endif %}
+                </strong>
+            </div>
+        {% elseif error %}
             <div class="alert alert-danger">
                 <span class="glyphicon glyphicon-remove"></span><strong>
                     {% if error is iterable %}

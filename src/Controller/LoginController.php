@@ -23,6 +23,7 @@ class LoginController implements ControllerProviderInterface
         $action= $request->get('action');
         if (isset($action) && $action == 'register') {
             $error    = [];
+            $success  = [];
             $action   = 'register';
             $name     = $request->get('name');
             $username = $request->get('username');
@@ -63,7 +64,7 @@ class LoginController implements ControllerProviderInterface
                         ]
                     );
                     if ($user != false) {
-                        $error[] = "Registration complete! You can now login.";
+                        $success[] = "Registration complete! You can now login.";
                         $name = '';
                         $email = '';
                         $action = 'login';
@@ -74,6 +75,7 @@ class LoginController implements ControllerProviderInterface
             }
             return $app['twig']->render('login.html.twig', array(
                 'error'         => $error,
+                'success'       => $success,
                 'action'        => $action,
                 'name'          => $name,
                 'username'      => $username,

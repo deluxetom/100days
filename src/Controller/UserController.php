@@ -21,6 +21,7 @@ class UserController implements ControllerProviderInterface
     public function profileAction(Request $request, Application $app)
     {
         $error = [];
+        $success = [];
         $action = $request->get('action');
         if (isset($action) && $action == 'update') {
             $error    = [];
@@ -51,7 +52,7 @@ class UserController implements ControllerProviderInterface
                 }
 
                 if ($app['repository.user']->update($update, ['userId' => $app['session']->get('userId')]) != false) {
-                    $error[] = "Profile Updated";
+                    $success[] = "Profile Updated";
                 } else {
                     $error[] = "Technical error please retry later";
                 }
@@ -60,8 +61,9 @@ class UserController implements ControllerProviderInterface
         $user = $app['repository.user']->findByPk($app['session']->get('userId'));
 
         return $app['twig']->render('User/profile.html.twig', [
-            'user' => $user,
-            'error' => $error,
+            'user'      => $user,
+            'error'     => $error,
+            'success'   => $success,
         ]);
     }
 
