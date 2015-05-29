@@ -78,24 +78,24 @@
                             <form id="register-form" action="{{ path('login') }}" method="post" role="form" style="display: {% if action == 'register' %}block{% else %}none{% endif %};">
                                 <input type="hidden" name="action" id="action" value="register" />
                                 <div class="form-group">
-                                    <input type="text" name="name" id="name" tabindex="2" class="form-control" placeholder="Name" value="{{ name }}">
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Name" value="{{ name }}">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="{{ username }}">
+                                    <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="{{ username }}">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="{{ email }}">
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" value="{{ email }}">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" value="{{ password }}">
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" value="{{ password }}">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                    <input type="password" name="confirm-password" id="confirm-password" class="form-control" placeholder="Confirm Password">
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-outline btn-success" value="Register Now">
+                                            <input type="submit" name="register-submit" id="register-submit" class="form-control btn btn-outline btn-success" value="Register Now">
                                         </div>
                                     </div>
                                 </div>
