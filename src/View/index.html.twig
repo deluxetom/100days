@@ -9,7 +9,7 @@
         <div class="panel-heading">
             Log your daily activity
             <div class="pull-right">
-                <a class="btn btn-xs btn-outline btn-danger" href="#">
+                <a class="btn btn-xs btn-outline btn-danger" href="javascript:void(0);" onclick="reset();">
                     <i class="fa fa-fw fa-times"></i> Reset counter
                 </a>
             </div>
@@ -19,37 +19,37 @@
                 <div class="col-md-6 text-center">
                     <h3>Push ups</h3>
                     <div class="btn-group center">
-                        <button type="button" class="btn btn-lg btn-success">0</button>
-                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 1</button>
-                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 5</button>
-                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 10</button>
+                        <button type="button" class="btn btn-lg btn-success" id="pushups">0</button>
+                        <button type="button" class="btn btn-lg btn-default" onclick="plus(1,'pushups');"><i class="fa fa-plus-circle"></i> 1</button>
+                        <button type="button" class="btn btn-lg btn-default" onclick="plus(5,'pushups');"><i class="fa fa-plus-circle"></i> 5</button>
+                        <button type="button" class="btn btn-lg btn-default" onclick="plus(10,'pushups');"><i class="fa fa-plus-circle"></i> 10</button>
                     </div>
                 </div>
                 <div class="col-md-6 text-center">
                     <h3>Squats</h3>
                     <div class="btn-group center">
-                        <button type="button" class="btn btn-lg btn-success">0</button>
-                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 1</button>
-                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 5</button>
-                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 10</button>
+                        <button type="button" class="btn btn-lg btn-success" id="squats">0</button>
+                        <button type="button" class="btn btn-lg btn-default" onclick="plus(1,'squats');"><i class="fa fa-plus-circle"></i> 1</button>
+                        <button type="button" class="btn btn-lg btn-default" onclick="plus(5,'squats');"><i class="fa fa-plus-circle"></i> 5</button>
+                        <button type="button" class="btn btn-lg btn-default" onclick="plus(10,'squats');"><i class="fa fa-plus-circle"></i> 10</button>
                     </div>
                 </div>
                 <div class="col-md-6 text-center">
                     <h3>Jumping Jacks</h3>
                     <div class="btn-group center">
-                        <button type="button" class="btn btn-lg btn-success">0</button>
-                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 1</button>
-                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 5</button>
-                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 10</button>
+                        <button type="button" class="btn btn-lg btn-success" id="jumpingjacks">0</button>
+                        <button type="button" class="btn btn-lg btn-default" onclick="plus(1,'jumpingjacks');"><i class="fa fa-plus-circle"></i> 1</button>
+                        <button type="button" class="btn btn-lg btn-default" onclick="plus(5,'jumpingjacks');"><i class="fa fa-plus-circle"></i> 5</button>
+                        <button type="button" class="btn btn-lg btn-default" onclick="plus(10,'jumpingjacks');"><i class="fa fa-plus-circle"></i> 10</button>
                     </div>
                 </div>
                 <div class="col-md-6 text-center">
                     <h3>Sit ups</h3>
                     <div class="btn-group center">
-                        <button type="button" class="btn btn-lg btn-success">0</button>
-                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 1</button>
-                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 5</button>
-                        <button type="button" class="btn btn-lg btn-default"><i class="fa fa-plus-circle"></i> 10</button>
+                        <button type="button" class="btn btn-lg btn-success" id="situps">0</button>
+                        <button type="button" class="btn btn-lg btn-default" onclick="plus(1,'situps');"><i class="fa fa-plus-circle"></i> 1</button>
+                        <button type="button" class="btn btn-lg btn-default" onclick="plus(5,'situps');"><i class="fa fa-plus-circle"></i> 5</button>
+                        <button type="button" class="btn btn-lg btn-default" onclick="plus(10,'situps');"><i class="fa fa-plus-circle"></i> 10</button>
                     </div>
                 </div>
             </div>
@@ -136,6 +136,79 @@
                 labels: ['100s']
             });
 
+        });
+        function reset(){
+            if(confirm('Reset values?')){
+                $('#pushups').html('0');
+                $('#squats').html('0');
+                $('#situps').html('0');
+                $('#jumpingjacks').html('0');
+                localStorage.removeItem('day'+day);
+                resetCounter();
+                return true;
+            }
+        }
+        function daysUntil(year, month, day) {
+            var now = new Date(),
+                    dateEnd = new Date(year, month - 1, day), // months are zero-based
+                    days = (dateEnd - now) / 1000/60/60/24;   // convert milliseconds to days
+
+            return Math.round(days);
+        }
+
+        function plus(i, el){
+            var curvalue = parseInt($('#'+el).html(), 10);
+            var value = curvalue + i;
+            $('#'+el).html(value);
+            dayCounts[el] = value;
+            localStorage.setItem('day'+day,JSON.stringify(dayCounts));
+            addToCounter(el, i);
+            return true;
+        }
+
+        function addToCounter(type, nb)
+        {
+            $.ajax({
+                type: "GET",
+                dataType: 'text',
+                url: '/counter/add/' + type + '/' + nb,
+                data: {},
+                success: function(data) {
+                }
+            });
+        }
+
+        function resetCounter()
+        {
+            $.ajax({
+                type: "GET",
+                dataType: 'text',
+                url: '/counter/reset',
+                data: {},
+                success: function(data) {
+                }
+            });
+        }
+
+        $( document ).ready(function() {
+
+            var daysleft = daysUntil(2015, 09, 18);
+            $('#cd').html(daysleft + ' days left');
+
+            day = 100 - daysleft;
+            window.dayCounts = {};
+
+            if (localStorage.getItem('day'+day))
+                window.dayCounts = JSON.parse(localStorage.getItem('day'+day));
+
+            $('#pushups').html(dayCounts.pushups);
+            $('#squats').html(dayCounts.squats);
+            $('#situps').html(dayCounts.situps);
+            $('#jumpingjacks').html(dayCounts.jumpingjacks);
+
+            $( document ).bind( "mobileinit", function() {
+                $.mobile.buttonMarkup.hoverDelay = 500
+            });
         });
     </script>
 {% endblock %}

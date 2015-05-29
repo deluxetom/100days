@@ -58,6 +58,17 @@ abstract class Repository
         return $result;
     }
 
+    public function deleteByConditions($conditions)
+    {
+        $qb = $this->dbRead->createQueryBuilder()
+            ->delete($this->tableName);
+        foreach ($conditions as $field => $value) {
+            $qb->andWhere($field . '=:key_'.$field)
+                ->setParameter('key_'.$field, $value);
+        }
+        return $qb->execute();
+    }
+
     public function findBy($field, $value, array $fieldsToRetrieve = array())
     {
         $rows = $this->dbRead->createQueryBuilder()

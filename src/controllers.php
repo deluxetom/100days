@@ -25,6 +25,7 @@ $app->get('/', function () use ($app) {
 
 $app->mount('/login', new Days\Controller\LoginController);
 $app->mount('/user', new Days\Controller\UserController);
+$app->mount('/counter', new Days\Controller\CounterController);
 
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {

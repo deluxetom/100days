@@ -34,5 +34,8 @@ $app['twig'] = $app->share($app->extend('twig', function ($twig, $app) {
 $app['repository.user'] = $app->share(function ($app) {
     return new Days\Repository\User($app['dbs']['100days'], $app['dbs']['100days']);
 });
+$app['repository.counter'] = $app->share(function ($app) {
+    return new Days\Repository\Counter($app['dbs']['100days'], $app['dbs']['100days']);
+});
 
 return $app;
