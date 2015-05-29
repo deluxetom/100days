@@ -1,5 +1,12 @@
-{% extends "layout.html" %}
+{% extends "layout.html.twig" %}
+{% block title %}Error{% endblock %}
 
 {% block content %}
-    Page not found.
+<div class="row">
+    <div class="col-xs-12">
+        <div class="alert alert-danger">
+            Page not found
+        </div>
+    </div>
+</div>
 {% endblock %}

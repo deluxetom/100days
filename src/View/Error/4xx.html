@@ -1,5 +1,12 @@
-{% extends "layout.html" %}
+{% extends "layout.html.twig" %}
+{% block title %}Error{% endblock %}
 
 {% block content %}
-    An error occurred on the client.
+<div class="row">
+    <div class="col-xs-12">
+        <div class="alert alert-danger">
+            An error occurred on the client
+        </div>
+    </div>
+</div>
 {% endblock %}
