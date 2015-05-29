@@ -21,10 +21,10 @@ $app->error(function (\Exception $e, $code) use ($app) {
 
     // 404.html, or 40x.html, or 4xx.html, or error.html
     $templates = array(
-        'errors/'.$code.'.html',
-        'errors/'.substr($code, 0, 2).'x.html',
-        'errors/'.substr($code, 0, 1).'xx.html',
-        'errors/default.html',
+        'Error/'.$code.'.html',
+        'Error/'.substr($code, 0, 2).'x.html',
+        'Error/'.substr($code, 0, 1).'xx.html',
+        'Error/default.html',
     );
 
     return new Response($app['twig']->resolveTemplate($templates)->render(array('code' => $code)), $code);

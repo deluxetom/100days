@@ -13,10 +13,10 @@ $app['twig.options'] = array(
 $app['dbs.options'] = array (
     '100days' => array(
         'driver'    => 'pdo_mysql',
-        'host'      => '',
+        'host'      => '207.66.182.70',
         'dbname'    => '100days',
-        'user'      => '',
-        'password'  => '',
+        'user'      => '100days',
+        'password'  => 'dr3vTrprw9K3xzSp',
         'charset'   => 'utf8',
     )
 );
