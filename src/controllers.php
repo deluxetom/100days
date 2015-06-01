@@ -18,14 +18,11 @@ $app->before(function () use ($app) {
     }
 });
 
-$app->get('/', function () use ($app) {
-    return $app['twig']->render('index.html.twig', array());
-})
-->bind('homepage');
-
+$app->mount('/', new Days\Controller\IndexController);
 $app->mount('/login', new Days\Controller\LoginController);
 $app->mount('/user', new Days\Controller\UserController);
 $app->mount('/counter', new Days\Controller\CounterController);
+$app->mount('/series', new Days\Controller\SeriesController);
 
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {

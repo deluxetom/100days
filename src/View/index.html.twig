@@ -19,7 +19,7 @@
                 <div class="col-md-6 text-center">
                     <h3>Push ups</h3>
                     <div class="btn-group center">
-                        <button type="button" class="btn btn-lg btn-success" id="pushups">0</button>
+                        <button type="button" class="btn btn-lg btn-success" id="pushups">{{ counters.pushups }}</button>
                         <button type="button" class="btn btn-lg btn-default" onclick="plus(1,'pushups');"><i class="fa fa-plus-circle"></i> 1</button>
                         <button type="button" class="btn btn-lg btn-default" onclick="plus(5,'pushups');"><i class="fa fa-plus-circle"></i> 5</button>
                         <button type="button" class="btn btn-lg btn-default" onclick="plus(10,'pushups');"><i class="fa fa-plus-circle"></i> 10</button>
@@ -28,7 +28,7 @@
                 <div class="col-md-6 text-center">
                     <h3>Squats</h3>
                     <div class="btn-group center">
-                        <button type="button" class="btn btn-lg btn-success" id="squats">0</button>
+                        <button type="button" class="btn btn-lg btn-success" id="squats">{{ counters.squats }}</button>
                         <button type="button" class="btn btn-lg btn-default" onclick="plus(1,'squats');"><i class="fa fa-plus-circle"></i> 1</button>
                         <button type="button" class="btn btn-lg btn-default" onclick="plus(5,'squats');"><i class="fa fa-plus-circle"></i> 5</button>
                         <button type="button" class="btn btn-lg btn-default" onclick="plus(10,'squats');"><i class="fa fa-plus-circle"></i> 10</button>
@@ -37,7 +37,7 @@
                 <div class="col-md-6 text-center">
                     <h3>Jumping Jacks</h3>
                     <div class="btn-group center">
-                        <button type="button" class="btn btn-lg btn-success" id="jumpingjacks">0</button>
+                        <button type="button" class="btn btn-lg btn-success" id="jumpingjacks">{{ counters.jumpingjacks }}</button>
                         <button type="button" class="btn btn-lg btn-default" onclick="plus(1,'jumpingjacks');"><i class="fa fa-plus-circle"></i> 1</button>
                         <button type="button" class="btn btn-lg btn-default" onclick="plus(5,'jumpingjacks');"><i class="fa fa-plus-circle"></i> 5</button>
                         <button type="button" class="btn btn-lg btn-default" onclick="plus(10,'jumpingjacks');"><i class="fa fa-plus-circle"></i> 10</button>
@@ -46,7 +46,7 @@
                 <div class="col-md-6 text-center">
                     <h3>Sit ups</h3>
                     <div class="btn-group center">
-                        <button type="button" class="btn btn-lg btn-success" id="situps">0</button>
+                        <button type="button" class="btn btn-lg btn-success" id="situps">{{ counters.situps }}</button>
                         <button type="button" class="btn btn-lg btn-default" onclick="plus(1,'situps');"><i class="fa fa-plus-circle"></i> 1</button>
                         <button type="button" class="btn btn-lg btn-default" onclick="plus(5,'situps');"><i class="fa fa-plus-circle"></i> 5</button>
                         <button type="button" class="btn btn-lg btn-default" onclick="plus(10,'situps');"><i class="fa fa-plus-circle"></i> 10</button>
@@ -80,7 +80,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="button">&nbsp;</label>
-                        <button type="button" class="btn btn-outline btn-success btn-md btn-block"><i class="fa fa-plus"></i> Add</button>
+                        <button type="button" class="btn btn-outline btn-success btn-md btn-block" onclick="addToSeries();"><i class="fa fa-plus"></i> Add</button>
                     </div>
                 </div>
             </div>
@@ -104,7 +104,8 @@
     <script>
         $(function() {
             $('#dtpicker').datetimepicker({
-                maxDate: "2015-05-22",
+                minDate: "{{ minDate }}",
+                maxDate: "{{ maxDate }}",
                 icons: {
                     time: "fa fa-clock-o",
                     date: "fa fa-calendar",
@@ -117,13 +118,9 @@
             new Morris.Area({
                 element: 'morris-area-chart',
                 data: [
-                    { day: '2015-05-28', sets: 1 },
-                    { day: '2015-05-27', sets: 2 },
-                    { day: '2015-05-26', sets: 1 },
-                    { day: '2015-05-25', sets: 2 },
-                    { day: '2015-05-24', sets: 2 },
-                    { day: '2015-05-23', sets: 1 },
-                    { day: '2015-05-22', sets: 1 },
+                    {% for se in series %}
+                    { day: '{{ se.date }}', sets: {{ se.nb }} },
+                    {% endfor %}
                 ],
                 pointSize: 3,
                 goalStrokeWidth: 0.7,
@@ -164,6 +161,22 @@
             localStorage.setItem('day'+day,JSON.stringify(dayCounts));
             addToCounter(el, i);
             return true;
+        }
+
+        function addToSeries()
+        {
+            var nb = $('#nb').val();
+            var date = $('#start_date').val();
+            if (nb>0) {
+                $.ajax({
+                    type: "GET",
+                    dataType: 'text',
+                    url: '/series/add/' + nb + '/' + date,
+                    data: {},
+                    success: function(data) {
+                    }
+                });
+            }
         }
 
         function addToCounter(type, nb)

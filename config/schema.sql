@@ -19,3 +19,12 @@ CREATE TABLE `counter` (
   PRIMARY KEY (`userId`,`date`,`type`),
   CONSTRAINT `counter_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `series`;
+CREATE TABLE `series` (
+  `userId` int(10) unsigned NOT NULL,
+  `date` date NOT NULL,
+  `nb` smallint(4) unsigned NOT NULL,
+  PRIMARY KEY (`userId`,`date`),
+  CONSTRAINT `series_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
