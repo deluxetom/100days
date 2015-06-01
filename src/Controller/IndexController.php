@@ -10,6 +10,8 @@ class IndexController implements ControllerProviderInterface
 {
     public function indexAction(Request $request, Application $app)
     {
+        $firstDay = "2015-06-08";
+
         $counters = [];
         $tmpCounters = $app['repository.counter']->findAll(['userId'=>$app['session']->get('userId')], [], ['date'=>'ASC']);
         foreach ($tmpCounters as $counter) {
@@ -27,7 +29,6 @@ class IndexController implements ControllerProviderInterface
 
         $series = [];
         $tmpSeries = $app['repository.series']->findAll(['userId'=>$app['session']->get('userId')], [], ['date'=>'ASC']);
-        $firstDay = "2015-06-08";
         for ($i=0;$i<100;$i++) {
             $date = date("Y-m-d", strtotime($firstDay . " + $i days"));
             $nb = 0;
@@ -43,8 +44,8 @@ class IndexController implements ControllerProviderInterface
         return $app['twig']->render('index.html.twig', array(
             'series'    => $series,
             'counters'  => $counters,
-            'minDate'   => "2015-06-08",
-            'maxDate'   => date("Y-m-d", strtotime("2015-06-08 + 100 days")),
+            'minDate'   => $firstDay,
+            'maxDate'   => date("Y-m-d", strtotime("$firstDay + 100 days")),
         ));
     }
 
