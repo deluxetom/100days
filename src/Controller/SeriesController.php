@@ -10,12 +10,12 @@ class SeriesController implements ControllerProviderInterface
 {
     public function addAction(Request $request, Application $app, $nb, $date)
     {
-        if (preg_match('/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/i', $date) && $date>=$app['start_date'] && $date<=date("Y-m-d", strtotime($app['start_date'] . " + " . ($app['lifetime']-1) . " days"))) {
+        if (preg_match('/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/i', $date) && $date>=$app['start_date'] && $date<=date("Y-m-d", strtotime($app['start_date'] . " + " . ($app['lifetime']-1) . " days")) && is_numeric($nb)) {
             $counter = $app['repository.series']->findOneByConditions(['userId' => $app['session']->get('userId'), 'date' => $date]);
             if (isset($counter['userId'])) {
-                $app['repository.series']->increment('nb', $nb, ['userId' => $app['session']->get('userId'), 'date' => $date]);
+                $app['repository.series']->increment('nb', intVal($nb), ['userId' => $app['session']->get('userId'), 'date' => $date]);
             } else {
-                $app['repository.series']->insert(['userId' => $app['session']->get('userId'), 'date' => $date, 'nb' => $nb]);
+                $app['repository.series']->insert(['userId' => $app['session']->get('userId'), 'date' => $date, 'nb' => intVal($nb)]);
             }
         }
         $series = [];
