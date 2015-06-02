@@ -29,6 +29,7 @@ class UserController implements ControllerProviderInterface
             //$username = $request->get('username');
             //$email    = $request->get('email');
             $password = $request->get('password');
+            $fid = $request->get('fid');
 
             if (!$name) {
                 $error[] = "Invalid Name";
@@ -42,7 +43,7 @@ class UserController implements ControllerProviderInterface
             }
             */
             if (count($error) == 0) {
-                $update = ['name' => $name];
+                $update = ['name' => $name, 'fid' => $fid];
                 if ($password && $password != 'oldpassword100days') {
                     $salt = md5($password);
                     $encoder = new MessageDigestPasswordEncoder();

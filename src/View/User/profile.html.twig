@@ -33,6 +33,11 @@
         {% endif %}
         <form id="register-form" action="{{ path('user-profile') }}" method="post" role="form">
             <input type="hidden" name="action" id="action" value="update" />
+            <div>
+                {% if user.fid != '' %}
+                <img src="http://graph.facebook.com/{{ user.fid }}/picture?type=large" />
+                {% endif %}
+            </div>
             <div class="form-group">
                 <input type="text" name="name" id="name" tabindex="2" class="form-control" placeholder="Name" value="{{ user.name }}">
             </div>
@@ -41,6 +46,9 @@
             </div>
             <div class="form-group">
                 <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="{{ user.email }}" disabled>
+            </div>
+            <div class="form-group">
+                <input type="text" name="fid" id="fid" tabindex="1" class="form-control" placeholder="Facebook ID" value="{{ user.fid }}">
             </div>
             <div class="form-group">
                 <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" value="oldpassword100days">

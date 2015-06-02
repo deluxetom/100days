@@ -27,6 +27,7 @@ class LoginController implements ControllerProviderInterface
             $action   = 'register';
             $name     = $request->get('name');
             $username = $request->get('username');
+            $fid      = $request->get('fid');
             $email    = $request->get('email');
             $password = $request->get('password');
             $confirmPassword = $request->get('confirm-password');
@@ -56,6 +57,7 @@ class LoginController implements ControllerProviderInterface
                         [
                             'name'      => $name,
                             'username'  => $username,
+                            'fid'       => $fid,
                             'password'  => $crypted,
                             'email'     => $email,
                             'enabled'   => 1,
@@ -76,6 +78,7 @@ class LoginController implements ControllerProviderInterface
                         $app['mailer']->send($smessage);
                         $name = '';
                         $email = '';
+                        $fid = '';
                         $action = 'login';
                     } else {
                         $error[] = "Technical error please retry later";
@@ -88,6 +91,7 @@ class LoginController implements ControllerProviderInterface
                 'action'        => $action,
                 'name'          => $name,
                 'username'      => $username,
+                'fid'           => $fid,
                 'last_username' => $username,
                 'password'      => $password,
                 'email'         => $email,
