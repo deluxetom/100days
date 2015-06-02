@@ -106,6 +106,7 @@
             $('#dtpicker').datetimepicker({
                 minDate: "{{ minDate }}",
                 maxDate: "{{ maxDate }}",
+                defaultDate: "{{ defaultDate }}",
                 icons: {
                     time: "fa fa-clock-o",
                     date: "fa fa-calendar",
@@ -220,8 +221,7 @@
 
         $( document ).ready(function() {
 
-            var daysleft = daysUntil(2015, 09, 18);
-            $('#cd').html(daysleft + ' days left');
+            var daysleft = daysUntil(2015, 09, 15);
 
             day = 100 - daysleft;
             window.dayCounts = {};
@@ -233,10 +233,7 @@
             $('#squats').html(dayCounts.squats);
             $('#situps').html(dayCounts.situps);
             $('#jumpingjacks').html(dayCounts.jumpingjacks);
-
-            $( document ).bind( "mobileinit", function() {
-                $.mobile.buttonMarkup.hoverDelay = 500
-            });
+            $('#dtpicker').data("DateTimePicker").defaultDate("{{ defaultDate }}");
         });
     </script>
 {% endblock %}

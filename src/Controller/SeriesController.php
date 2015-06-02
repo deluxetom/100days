@@ -10,11 +10,13 @@ class SeriesController implements ControllerProviderInterface
 {
     public function addAction(Request $request, Application $app, $nb, $date)
     {
-        $counter = $app['repository.series']->findOneByConditions(['userId' => $app['session']->get('userId'), 'date' => $date]);
-        if (isset($counter['userId'])) {
-            $app['repository.series']->increment('nb', $nb, ['userId' => $app['session']->get('userId'), 'date' => $date]);
-        } else {
-            $app['repository.series']->insert(['userId' => $app['session']->get('userId'), 'date' => $date, 'nb' => $nb]);
+        if (preg_match('/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/i', $date) && $date>=$app['start_date'] && $date<=date("Y-m-d", strtotime($app['start_date'] . " + " . ($app['lifetime']-1) . " days"))) {
+            $counter = $app['repository.series']->findOneByConditions(['userId' => $app['session']->get('userId'), 'date' => $date]);
+            if (isset($counter['userId'])) {
+                $app['repository.series']->increment('nb', $nb, ['userId' => $app['session']->get('userId'), 'date' => $date]);
+            } else {
+                $app['repository.series']->insert(['userId' => $app['session']->get('userId'), 'date' => $date, 'nb' => $nb]);
+            }
         }
         $series = [];
         $tmpSeries = $app['repository.series']->findAll(['userId'=>$app['session']->get('userId')], [], ['date'=>'ASC']);

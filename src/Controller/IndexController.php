@@ -40,7 +40,8 @@ class IndexController implements ControllerProviderInterface
             'series'    => $series,
             'counters'  => $counters,
             'minDate'   => $app['start_date'],
-            'maxDate'   => date("Y-m-d", strtotime($app['start_date'] . " + " . $app['lifetime'] . " days")),
+            'maxDate'   => date("Y-m-d", strtotime($app['start_date'] . " + " . ($app['lifetime']-1) . " days")),
+            'defaultDate' => (date("Y-m-d")>$app['start_date']) ? date("Y-m-d") : $app['start_date'],
         ));
     }
 
