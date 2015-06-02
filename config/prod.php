@@ -2,8 +2,9 @@
 
 use Predis\Session\Handler;
 
-$app['start_date'] = "2015-06-08";
-$app['lifetime'] = 100;
+$app['start_date'] = "2015-06-08"; // start date of the event
+$app['lifetime'] = 100; // in days
+$app['types'] = ['pushups', 'squats', 'situps', 'jumpingjacks']; // DB table counter
 
 //twig
 $app['twig.path'] = array(__DIR__.'/../src/View');

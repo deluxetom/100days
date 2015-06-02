@@ -13,12 +13,12 @@ CREATE TABLE IF NOT EXISTS `user` (
 DROP TABLE IF EXISTS `counter`;
 CREATE TABLE `counter` (
   `userId` int(10) unsigned NOT NULL,
-  `date` date NOT NULL,
   `type` enum('pushups','squats','situps','jumpingjacks') NOT NULL,
   `nb` smallint(4) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`userId`,`date`,`type`),
+  PRIMARY KEY (`userId`,`type`),
   CONSTRAINT `counter_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `series`;
 CREATE TABLE `series` (

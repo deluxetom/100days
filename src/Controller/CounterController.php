@@ -8,20 +8,20 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CounterController implements ControllerProviderInterface
 {
-    public function addAction(Request $request, Application $app, $type, $nb, $date)
+    public function addAction(Request $request, Application $app, $type, $nb)
     {
-        $counter = $app['repository.counter']->findOneByConditions(['userId' => $app['session']->get('userId'), 'type' => $type, 'date' => $date]);
+        $counter = $app['repository.counter']->findOneByConditions(['userId' => $app['session']->get('userId'), 'type' => $type]);
         if (isset($counter['userId'])) {
-            $app['repository.counter']->increment('nb', $nb, ['userId' => $app['session']->get('userId'), 'type' => $type, 'date' => $date]);
+            $app['repository.counter']->increment('nb', $nb, ['userId' => $app['session']->get('userId'), 'type' => $type]);
         } else {
-            $app['repository.counter']->insert(['userId' => $app['session']->get('userId'), 'type' => $type, 'date' => $date, 'nb' => $nb]);
+            $app['repository.counter']->insert(['userId' => $app['session']->get('userId'), 'type' => $type, 'nb' => $nb]);
         }
         return 1;
     }
 
-    public function resetAction(Request $request, Application $app, $date)
+    public function resetAction(Request $request, Application $app)
     {
-        $app['repository.counter']->deleteByConditions(['userId' => $app['session']->get('userId'), 'date' => $date]);
+        $app['repository.counter']->deleteByConditions(['userId' => $app['session']->get('userId')]);
         return 1;
     }
 
@@ -29,12 +29,10 @@ class CounterController implements ControllerProviderInterface
     {
         $ct = $app['controllers_factory'];
 
-        $ct->match("/add/{type}/{nb}/{date}", 'Days\Controller\CounterController::addAction')
-            ->value('date', date("Y-m-d"))
+        $ct->match("/add/{type}/{nb}", 'Days\Controller\CounterController::addAction')
             ->bind("counter-add");
 
-        $ct->match("/reset/{date}", 'Days\Controller\CounterController::resetAction')
-            ->value('date', date("Y-m-d"))
+        $ct->match("/reset", 'Days\Controller\CounterController::resetAction')
             ->bind("counter-reset");
 
         return $ct;

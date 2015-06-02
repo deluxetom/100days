@@ -11,17 +11,14 @@ class IndexController implements ControllerProviderInterface
     public function indexAction(Request $request, Application $app)
     {
         $counters = [];
-        $tmpCounters = $app['repository.counter']->findAll(['userId'=>$app['session']->get('userId')], [], ['date'=>'ASC']);
+        $tmpCounters = $app['repository.counter']->findAll(['userId'=>$app['session']->get('userId')], [], ['type'=>'ASC']);
         foreach ($tmpCounters as $counter) {
-            if (isset($counters[$counter['type']])) {
-                $counters[$counter['type']] += $counter['nb'];
-            } else {
-                $counters[$counter['type']] = $counter['nb'];
-            }
+            $counters[$counter['type']] = $counter['nb'];
         }
-        foreach (['pushups', 'squats', 'situps', 'jumpingjacks'] as $activity) {
-            if (!isset($counters[$activity])) {
-                $counters[$activity] = 0;
+        unset($tmpCounters);
+        foreach ($app['types'] as $type) {
+            if (!isset($counters[$type])) {
+                $counters[$type] = 0;
             }
         }
 
