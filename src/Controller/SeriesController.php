@@ -16,7 +16,20 @@ class SeriesController implements ControllerProviderInterface
         } else {
             $app['repository.series']->insert(['userId' => $app['session']->get('userId'), 'date' => $date, 'nb' => $nb]);
         }
-        return 1;
+        $series = [];
+        $tmpSeries = $app['repository.series']->findAll(['userId'=>$app['session']->get('userId')], [], ['date'=>'ASC']);
+        for ($i=0;$i<$app['lifetime'];$i++) {
+            $date = date("Y-m-d", strtotime($app['start_date'] . " + $i days"));
+            $nb = 0;
+            foreach ($tmpSeries as $se) {
+                if ($se['date'] == $date) {
+                    $nb = $se['nb'];
+                    break;
+                }
+            }
+            $series[] = ['day'=>$date, 'sets'=>$nb];
+        }
+        return json_encode($series);
     }
 
     public function connect(Application $app)

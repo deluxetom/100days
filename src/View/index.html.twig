@@ -86,7 +86,7 @@
             </div>
         </div>
     </div>
-
+    <a name="charts"></a>
     <div class="panel panel-default">
         <div class="panel-heading">
             History
@@ -170,10 +170,25 @@
             if (nb>0) {
                 $.ajax({
                     type: "GET",
-                    dataType: 'text',
+                    dataType: 'json',
                     url: '/series/add/' + nb + '/' + date,
                     data: {},
                     success: function(data) {
+                        $('#morris-area-chart').html('');
+                        new Morris.Area({
+                            element: 'morris-area-chart',
+                            data: data,
+                            pointSize: 3,
+                            goalStrokeWidth: 0.7,
+                            lineColors:['#316EA2'],
+                            resize: false,
+                            grid: true,
+                            xkey: 'day',
+                            xLabels: 'day',
+                            ykeys: ['sets'],
+                            labels: ['100s']
+                        });
+                        document.location.href = '#charts';
                     }
                 });
             }
