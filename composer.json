@@ -40,7 +40,8 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "sudo mkdir -p -m 777 var/logs/ var/cache/"
+            "sudo mkdir -p -m 777 var/logs/ var/cache/",
+            "php bin/console cache:clear"
         ]
     }
 }
