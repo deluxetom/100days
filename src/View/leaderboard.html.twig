@@ -16,16 +16,13 @@
             </tr>
             </thead>
             <tbody>
+            {% for num, user in users %}
             <tr>
-                <td class="vert-align">1</td>
-                <td class="vert-align"><img src="http://graph.facebook.com/dlxtom/picture" class="img-circle"> Thomas Picquet</td>
-                <td class="active text-center"><h3>34</h3></td>
+                <td class="vert-align">{{ num+1 }}</td>
+                <td class="vert-align" style="text-transform: capitalize;"><img src="{% if user.fid != '' %}http://graph.facebook.com/{{ user.fid }}/picture{% else %}http://placehold.it/50x50&text=&nbsp;{% endif %}" class="img-circle"> {{ user.name }}</td>
+                <td class="active text-center"><h3>{{ user.nbSeries }}</h3></td>
             </tr>
-            <tr>
-                <td class="vert-align">2</td>
-                <td class="vert-align"><img src="http://placehold.it/50x50&text=&nbsp;" class="img-circle"> Cyril Legrand</td>
-                <td class="active text-center"><h3>34</h3></td>
-            </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>

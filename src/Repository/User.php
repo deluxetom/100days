@@ -18,4 +18,17 @@ class User extends Repository
         $member = $this->findOneBy('username', $username);
         return isset($member['userId']);
     }
+
+    public function leaderBoard()
+    {
+        return $this->dbRead->createQueryBuilder()
+            ->select('u.username, u.name, u.fid, SUM(s.nb) AS nbSeries')
+            ->from('user', 'u')
+            ->from('series', 's')
+            ->andWhere('u.userId=s.userId')
+            ->groupBy('u.userId')
+            ->orderBy('nbSeries', 'DESC')
+            ->execute()
+            ->fetchAll();
+    }
 }

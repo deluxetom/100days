@@ -9,9 +9,9 @@ class LeaderboardController implements ControllerProviderInterface
 {
     public function indexAction(Application $app)
     {
-
+        $users = $app['repository.user']->leaderBoard();
         return $app['twig']->render('leaderboard.html.twig', array(
-
+            'users' => $users,
         ));
     }
 
