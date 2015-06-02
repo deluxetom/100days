@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 use Days\Command\AdminPass;
+use Days\Command\CacheClear;
 use Days\Command\ResetCounter;
 
 $console = new Application('100 Days Application', '1.0');
@@ -14,6 +15,7 @@ $console->getDefinition()->addOption(new InputOption('--env', '-e', InputOption:
 $console->setDispatcher($app['dispatcher']);
 
 $console->add(new AdminPass());
+$console->add(new CacheClear($app));
 $console->add(new ResetCounter($app));
 
 return $console;
