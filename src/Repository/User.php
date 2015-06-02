@@ -21,14 +21,13 @@ class User extends Repository
 
     public function leaderBoard()
     {
-        return $this->dbRead->createQueryBuilder()
-            ->select('u.username, u.name, u.fid, SUM(s.nb) AS nbSeries')
-            ->from('user', 'u')
-            ->from('series', 's')
-            ->andWhere('u.userId=s.userId')
-            ->groupBy('u.userId')
-            ->orderBy('nbSeries', 'DESC')
-            ->execute()
-            ->fetchAll();
+        $query = "SELECT u.username, u.name, u.fid, SUM(s.nb) AS nbSeries
+                  FROM user AS u
+                  LEFT JOIN series AS s ON u.userId=s.userId
+                  GROUP BY u.userId
+                  ORDER BY nbSeries DESC, u.userId ASC";
+        $statement = $this->dbRead->prepare($query);
+        $statement->execute();
+        return $statement->fetchAll();
     }
 }
