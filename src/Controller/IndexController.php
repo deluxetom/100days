@@ -10,8 +10,6 @@ class IndexController implements ControllerProviderInterface
 {
     public function indexAction(Request $request, Application $app)
     {
-        $firstDay = "2015-06-08";
-
         $counters = [];
         $tmpCounters = $app['repository.counter']->findAll(['userId'=>$app['session']->get('userId')], [], ['date'=>'ASC']);
         foreach ($tmpCounters as $counter) {
@@ -29,8 +27,8 @@ class IndexController implements ControllerProviderInterface
 
         $series = [];
         $tmpSeries = $app['repository.series']->findAll(['userId'=>$app['session']->get('userId')], [], ['date'=>'ASC']);
-        for ($i=0;$i<100;$i++) {
-            $date = date("Y-m-d", strtotime($firstDay . " + $i days"));
+        for ($i=0;$i<$app['lifetime'];$i++) {
+            $date = date("Y-m-d", strtotime($app['start_date'] . " + $i days"));
             $nb = 0;
             foreach ($tmpSeries as $se) {
                 if ($se['date'] == $date) {
@@ -44,8 +42,8 @@ class IndexController implements ControllerProviderInterface
         return $app['twig']->render('index.html.twig', array(
             'series'    => $series,
             'counters'  => $counters,
-            'minDate'   => $firstDay,
-            'maxDate'   => date("Y-m-d", strtotime("$firstDay + 100 days")),
+            'minDate'   => $app['start_date'],
+            'maxDate'   => date("Y-m-d", strtotime($app['start_date'] . " + " . $app['lifetime'] . " days")),
         ));
     }
 

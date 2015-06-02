@@ -4,6 +4,9 @@ use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
 use Predis\Session\Handler;
 
+$app['start_date'] = "2015-06-08";
+$app['lifetime'] = 100;
+
 //twig
 $app['twig.path'] = array(__DIR__.'/../src/View');
 $app['twig.options'] = array(
