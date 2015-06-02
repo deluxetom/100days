@@ -66,3 +66,7 @@ BODY{
     text-decoration: underline;
     color: #666;
 }
+
+.table tbody>tr>td.vert-align{
+    vertical-align: middle;
+}
