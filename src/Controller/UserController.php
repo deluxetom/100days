@@ -67,20 +67,12 @@ class UserController implements ControllerProviderInterface
         ]);
     }
 
-    public function settingsAction(Request $request, Application $app)
-    {
-        return 'User Settings';
-    }
-
     public function connect(Application $app)
     {
         $user = $app['controllers_factory'];
 
         $user->match("/profile", 'Days\Controller\UserController::profileAction')
             ->bind("user-profile");
-
-        $user->match("/settings", 'Days\Controller\UserController::settingsAction')
-            ->bind("user-settings");
 
         return $user;
     }
