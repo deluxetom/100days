@@ -75,8 +75,36 @@ class UserController implements ControllerProviderInterface
      */
     public function publicProfileAction(Request $request, Application $app, $username)
     {
-        return $app['twig']->render('User/public-profile.html.twig', [
+        $yesterday = date("Y-m-d", strtotime('- 1 day'));
+        $today = date("Y-m-d");
 
+        $user = $app['repository.user']->findOneBy('username', $username);
+        $user['total'] = 0;
+        $user['yesterday'] = 0;
+        $user['today'] = 0;
+
+        $series = [];
+        $tmpSeries = $app['repository.series']->findAll(['userId'=>$user['userId']], [], ['date'=>'ASC']);
+        for ($i=0;$i<$app['lifetime'];$i++) {
+            $date = date("Y-m-d", strtotime($app['start_date'] . " + $i days"));
+            $nb = 0;
+            foreach ($tmpSeries as $se) {
+                if ($se['date'] == $date) {
+                    $nb = $se['nb'];
+                    break;
+                }
+            }
+            if ($date == $yesterday) {
+                $user['yesterday'] = $nb;
+            } else if ($date == $today) {
+                $user['today'] = $nb;
+            }
+            $user['total'] += $nb;
+            $series[] = ['date'=>$date, 'nb'=>$nb];
+        }
+        return $app['twig']->render('User/public-profile.html.twig', [
+            'user'      => $user,
+            'series'    => $series,
         ]);
     }
 
