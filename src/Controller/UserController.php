@@ -68,12 +68,27 @@ class UserController implements ControllerProviderInterface
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
+    public function publicProfileAction(Request $request, Application $app, $username)
+    {
+        return $app['twig']->render('User/public-profile.html.twig', [
+
+        ]);
+    }
+
     public function connect(Application $app)
     {
         $user = $app['controllers_factory'];
 
         $user->match("/profile", 'Days\Controller\UserController::profileAction')
             ->bind("user-profile");
+
+        $user->match("/profile/{username}", 'Days\Controller\UserController::publicProfileAction')
+            ->bind("user-profile-public");
 
         return $user;
     }

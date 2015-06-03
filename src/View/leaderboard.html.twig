@@ -14,7 +14,7 @@
                 <th>Name</th>
                 <th class="text-center">100s</th>
                 <th class="text-center">Today</th>
-                <th class="text-center">Yesterday</th>
+                <th class="text-center"><span class="hidden-xs">Yesterday</span></th>
             </tr>
             </thead>
             <tbody>
@@ -22,9 +22,9 @@
             <tr>
                 <td class="vert-align">{{ num+1 }}</td>
                 <td class="vert-align" style="text-transform: capitalize;"><img src="{% if user.fid != '' %}http://graph.facebook.com/{{ user.fid }}/picture{% else %}http://placehold.it/50x50&text=&nbsp;{% endif %}" class="img-circle"> {{ user.name }}</td>
-                <td class="active text-center"><h3>{{ user.nbSeries ? : 0 }}</h3></td>
-                <td class="active text-center"><h3>{{ user.yesterday ? : 0 }}</h3></td>
-                <td class="active text-center"><h3>{{ user.today ? : 0 }}</h3></td>
+                <td class="vert-align active text-center"><h4>{{ user.nbSeries ? : 0 }}</h4></td>
+                <td class="text-center vert-align"><h4>{{ user.yesterday ? : 0 }}</h4></td>
+                <td class="text-center vert-align"><h4>{{ user.today ? : 0 }}</h4></td>
             </tr>
             {% endfor %}
             </tbody>
