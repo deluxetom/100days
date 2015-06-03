@@ -79,6 +79,9 @@ class UserController implements ControllerProviderInterface
         $today = date("Y-m-d");
 
         $user = $app['repository.user']->findOneBy('username', $username);
+        if (!isset($user['userId'])) {
+            $app->abort(404, "Page Not Found");
+        }
         $user['total'] = 0;
         $user['yesterday'] = 0;
         $user['today'] = 0;
