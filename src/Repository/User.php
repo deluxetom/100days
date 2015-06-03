@@ -21,13 +21,31 @@ class User extends Repository
 
     public function leaderBoard()
     {
-        $query = "SELECT u.username, u.name, u.fid, SUM(s.nb) AS nbSeries
+        $query = "SELECT u.userId, u.username, u.name, u.fid, SUM(s.nb) AS nbSeries
                   FROM user AS u
                   LEFT JOIN series AS s ON u.userId=s.userId
                   GROUP BY u.userId
                   ORDER BY nbSeries DESC, u.userId ASC";
         $statement = $this->dbRead->prepare($query);
         $statement->execute();
-        return $statement->fetchAll();
+        $users = $statement->fetchAll();
+        $yesterday = date("Y-m-d", strtotime('- 1 day'));
+        $today = date("Y-m-d");
+        for($i=0;$i<count($users);$i++) {
+            $query = "SELECT s.date, s.nb
+                  FROM series AS s
+                  WHERE s.userId='".$users[$i]['userId']."' AND (s.date='" . $yesterday . "' OR  s.date='" . $today . "')";
+            $statement = $this->dbRead->prepare($query);
+            $statement->execute();
+            $rows = $statement->fetchAll();
+            foreach($rows as $row) {
+                if ($row['date'] == $yesterday) {
+                    $users[$i]['yesterday'] = $row['nb'];
+                } else {
+                    $users[$i]['today'] = $row['nb'];
+                }
+            }
+        }
+        return $users;
     }
 }

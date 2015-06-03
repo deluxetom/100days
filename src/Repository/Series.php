@@ -7,6 +7,4 @@ class Series extends Repository
     {
         parent::__construct($dbConnectorRead, $dbConnectorWrite, 'series', 'userId');
     }
-
-
 }
