@@ -53,6 +53,73 @@
             <div id="morris-area-chart"></div>
         </div>
     </div>
+
+    <a name="comments"></a>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Comments
+            <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                <i class="fa fa-comment"></i>
+            </button>
+        </div>
+    {% if comments is iterable and comments|length %}
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="media-list comments">
+                        {% for comment in comments %}
+                            <li class="media">
+                                <a class="pull-left" href="{{ path('user-profile-public', {username: comment.user.username}) }}">
+                                    <img class="media-object img-circle img-thumbnail" src="{% if comment.user.fid != '' %}http://graph.facebook.com/{{ comment.user.fid }}/picture?width=50&height=50{% else %}http://placehold.it/50x50&text=&nbsp;{% endif %}" width="50">
+                                </a>
+                                <div class="media-body">
+                                    <h5 class="media-heading pull-left" style="text-transform: capitalize;">{{ comment.user.name }}</h5>
+                                    <div class="comment-info pull-right">
+                                        <div class="btn btn-default btn-xs"><i class="fa fa-clock-o"></i> {{ comment.timestamp|date('F jS H:i') }}</div>
+                                    </div>
+                                </div>
+                                    <div class="well">
+                                        <small>{{ comment.comment }}</small>
+                                    </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    </div>
+    <div class="modal" id="modalCompose" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Write a Comment</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-12" for="inputBody">Message</label>
+                            <div class="col-sm-12"><textarea class="form-control" id="inputBody" rows="8"></textarea></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary " onclick="sendForm();">Post <i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <form action="{{ path('user-comment') }}" method="POST" id="commentForm">
+        <input type="hidden" name="fid" id="fid" value="{{ user.userId }}" />
+        <input type="hidden" name="fdt" id="fdt" value="0000-00-00" />
+        <input type="hidden" name="usn" id="usn" value="{{ user.username }}" />
+        <input type="hidden" name="comment" id="comment" value="" />
+    </form>
 {% endblock %}
 
 
@@ -80,7 +147,17 @@
             });
 
         });
+        function sendForm()
+        {
+            $('#commentForm #comment').val($('#inputBody').val());
+            $('#commentForm').submit();
+        }
+        $(function() {
+            $('#modalCompose').on('shown.bs.modal', function () {
+                $('#inputBody').focus()
+            });
 
+        });
 
     </script>
 {% endblock %}

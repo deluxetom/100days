@@ -82,6 +82,7 @@ class UserController implements ControllerProviderInterface
         if (!isset($user['userId'])) {
             $app->abort(404, "Page Not Found");
         }
+
         $user['total'] = 0;
         $user['yesterday'] = 0;
         $user['today'] = 0;
@@ -105,10 +106,34 @@ class UserController implements ControllerProviderInterface
             $user['total'] += $nb;
             $series[] = ['date'=>$date, 'nb'=>$nb];
         }
+        $comments = $app['repository.comment']->findAll(['forUserId'=>$user['userId'], 'forDate'=>'0000-00-00'], [], ['timestamp'=>'ASC']);
+        for ($c=0;$c<count($comments);$c++) {
+            $comments[$c]['user'] = $app['repository.user']->findByPk($comments[$c]['userId']);
+        }
         return $app['twig']->render('User/public-profile.html.twig', [
             'user'      => $user,
             'series'    => $series,
+            'comments'  => $comments,
         ]);
+    }
+
+    public function commentAction(Request $request, Application $app)
+    {
+        if ($forUserId = $request->get('fid')) {
+            $forDate = $request->get('fdt');
+            $username = $request->get('usn');
+            $comment = $request->get('comment');
+            if ($comment != '') {
+                $app['repository.comment']->insert([
+                    'userId'    => $app['session']->get('userId'),
+                    'comment'   => $comment,
+                    'forUserId' => $forUserId,
+                    'forDate'   => $forDate,
+                ]);
+            }
+            return $app->redirect($app['url_generator']->generate('user-profile-public', ['username' => $username]) . "#comments");
+        }
+        return $app->redirect($app['url_generator']->generate('leaderboard'));
     }
 
     public function connect(Application $app)
@@ -120,6 +145,9 @@ class UserController implements ControllerProviderInterface
 
         $user->match("/profile/{username}", 'Days\Controller\UserController::publicProfileAction')
             ->bind("user-profile-public");
+
+        $user->match("/comment", 'Days\Controller\UserController::commentAction')
+            ->bind("user-comment");
 
         return $user;
     }

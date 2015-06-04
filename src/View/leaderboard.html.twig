@@ -12,6 +12,7 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th class="text-center">Comments</th>
                 <th class="text-center">100s</th>
                 <th class="text-center">Today</th>
                 <th class="text-center"><span class="hidden-xs">Yesterday</span></th>
@@ -22,6 +23,9 @@
             <tr>
                 <td class="vert-align">{{ num+1 }}</td>
                 <td class="vert-align" style="text-transform: capitalize;"><img src="{% if user.fid != '' %}http://graph.facebook.com/{{ user.fid }}/picture?width=50&height=50{% else %}http://placehold.it/50x50&text=&nbsp;{% endif %}" class="img-circle"> <a href="{{ path('user-profile-public', {username: user.username}) }}">{{ user.name }}</a></td>
+                <td class="vert-align text-center"><button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose" onclick="popForm('{{ user.userId }}', '{{ user.username }}');">
+                        <i class="fa fa-comment"></i>
+                    </button></td>
                 <td class="vert-align active text-center"><h4>{{ user.nbSeries ? : 0 }}</h4></td>
                 <td class="text-center vert-align"><h4>{{ user.yesterday ? : 0 }}</h4></td>
                 <td class="text-center vert-align"><h4>{{ user.today ? : 0 }}</h4></td>
@@ -30,9 +34,58 @@
             </tbody>
         </table>
     </div>
+    <div class="modal" id="modalCompose" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Write a Comment</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-12" for="inputBody">Message</label>
+                            <div class="col-sm-12"><textarea class="form-control" id="inputBody" rows="8"></textarea></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary " onclick="sendForm();">Post <i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <form action="{{ path('user-comment') }}" method="POST" id="commentForm">
+        <input type="hidden" name="fid" id="fid" value="" />
+        <input type="hidden" name="fdt" id="fdt" value="0000-00-00" />
+        <input type="hidden" name="usn" id="usn" value="" />
+        <input type="hidden" name="comment" id="comment" value="" />
+    </form>
 {% endblock %}
 
 
 {% block footerjs %}
     {{ parent() }}
+    <script>
+        function popForm(id, usn)
+        {
+            $('#commentForm #fid').val(id);
+            $('#commentForm #usn').val(usn);
+        }
+        function sendForm()
+        {
+            $('#commentForm #comment').val($('#inputBody').val());
+            $('#commentForm').submit();
+        }
+        $(function() {
+            $('#modalCompose').on('shown.bs.modal', function () {
+                $('#inputBody').focus()
+            });
+
+        });
+
+    </script>
 {% endblock %}

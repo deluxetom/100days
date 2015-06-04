@@ -7,6 +7,4 @@ class Comment extends Repository
     {
         parent::__construct($dbConnectorRead, $dbConnectorWrite, 'comment', 'userId');
     }
-
-
 }
