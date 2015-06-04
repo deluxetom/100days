@@ -14,70 +14,37 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <ul class="media-list comments">
-
+                                {% for serie in series %}
                                 <li class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle img-thumbnail" src="http://graph.facebook.com/dlxtom/picture?width=50&height=50" width="50">
+                                    <a class="pull-left" href="{{ path('user-profile-public', {username: serie.username}) }}">
+                                        <img class="media-object img-circle img-thumbnail" src="{% if serie.fid != '' %}http://graph.facebook.com/{{ serie.fid }}/picture?width=50&height=50{% else %}http://placehold.it/50x50&text=&nbsp;{% endif %}" width="50">
                                     </a>
                                     <div class="media-body">
-                                        <h5 class="media-heading pull-left">Thomas Picquet</h5>
+                                        <h5 class="media-heading pull-left" style="text-transform: capitalize;">{{ serie.name }}</h5>
                                         <div class="comment-info pull-right">
-                                            <div class="btn btn-info btn-xs"><i class="fa fa-trophy"></i> 3</div>
-                                            <div class="btn btn-default btn-xs"><i class="fa fa-clock-o"></i> June 8th</div>
-                                            <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                            <div class="btn btn-info btn-xs"><i class="fa fa-trophy"></i> {{ serie.nb }}</div>
+                                            <div class="btn btn-default btn-xs"><i class="fa fa-clock-o"></i> {{ serie.date|date('F jS') }}</div>
+                                            <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose" onclick="popForm('{{ serie.userId }}', '{{ serie.date }}');">
                                                 <i class="fa fa-comment"></i>
                                             </button>
                                         </div>
                                     </div>
+                                    {% if serie.comments is iterable and serie.comments|length %}
                                     <div class="well">
-
-                                        <h5>Cyril Legrand <br> <small>Comment goes here</small></h5>
-                                        <hr>
-                                        <h5>Andrea Bach <br> <small>Suck deez nuts</small></h5>
+                                        {% for key, comment in serie.comments %}
+                                            {% if key != 0  %}
+                                        <hr />
+                                            {% endif %}
+                                        <h5 style="text-transform: capitalize;">{{ comment.user.name }} <br> <small>{{ comment.comment }}</small></h5>
+                                        {% endfor %}
                                     </div>
+                                    {% endif %}
                                 </li>
-
-                                <li class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle img-thumbnail" src="http://graph.facebook.com/dlxtom/picture?width=50&height=50" width="50">
-                                    </a>
-                                    <div class="media-body">
-                                        <h5 class="media-heading pull-left">Thomas Picquet</h5>
-                                        <div class="comment-info pull-right">
-                                            <div class="btn btn-info btn-xs"><i class="fa fa-trophy"></i> 3</div>
-                                            <div class="btn btn-default btn-xs"><i class="fa fa-clock-o"></i> June 8th</div>
-                                            <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
-                                                <i class="fa fa-comment"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle img-thumbnail" src="http://graph.facebook.com/dlxtom/picture?width=50&height=50" width="50">
-                                    </a>
-                                    <div class="media-body">
-                                        <h5 class="media-heading pull-left">Thomas Picquet</h5>
-                                        <div class="comment-info pull-right">
-                                            <div class="btn btn-info btn-xs"><i class="fa fa-trophy"></i> 3</div>
-                                            <div class="btn btn-default btn-xs"><i class="fa fa-clock-o"></i> June 8th</div>
-                                            <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
-                                                <i class="fa fa-comment"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
+                                {% endfor %}
                             </ul>
 
                         </div>
                     </div>
-
-
-
-
-                    <!-- /feed -->
-
                 </div>
             </div>
         </div>
@@ -97,56 +64,18 @@
                             </tr>
                             </thead>
                             <tbody>
+                            {% for key, user in topD %}
                                 <tr>
-                                    <td class="vert-align">1</td>
-                                    <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
-                                    <td class="vert-align active text-center">2</td>
+                                    <td class="vert-align">{{ key+1 }}</td>
+                                    <td class="vert-align" style="text-transform: capitalize;"><img src="{% if user.fid != '' %}http://graph.facebook.com/{{ user.fid }}/picture?width=20&height=20{% else %}http://placehold.it/20x20&text=&nbsp;{% endif %}" class="img-circle"> <a href="{{ path('user-profile-public', {username: user.username}) }}">{{ user.name }}</a></td>
+                                    <td class="vert-align active text-center">{{ user.nb ? : 0 }}</td>
                                     <td class="vert-align">
-                                        <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                        <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose" onclick="popForm('{{ user.userId }}', '{{ user.date }}');">
                                             <i class="fa fa-comment"></i>
                                         </button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="vert-align">2</td>
-                                    <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
-                                    <td class="vert-align active text-center">2</td>
-                                    <td class="vert-align">
-                                        <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
-                                            <i class="fa fa-comment"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="vert-align">3</td>
-                                    <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
-                                    <td class="vert-align active text-center">2</td>
-                                    <td class="vert-align">
-                                        <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
-                                            <i class="fa fa-comment"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="vert-align">4</td>
-                                    <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
-                                    <td class="vert-align active text-center">2</td>
-                                    <td class="vert-align">
-                                        <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
-                                            <i class="fa fa-comment"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="vert-align">5</td>
-                                    <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
-                                    <td class="vert-align active text-center">2</td>
-                                    <td class="vert-align">
-                                        <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
-                                            <i class="fa fa-comment"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -169,56 +98,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="vert-align">1</td>
-                                <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
-                                <td class="vert-align active text-center">2</td>
-                                <td class="vert-align">
-                                    <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
-                                        <i class="fa fa-comment"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="vert-align">2</td>
-                                <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
-                                <td class="vert-align active text-center">2</td>
-                                <td class="vert-align">
-                                    <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
-                                        <i class="fa fa-comment"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="vert-align">3</td>
-                                <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
-                                <td class="vert-align active text-center">2</td>
-                                <td class="vert-align">
-                                    <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
-                                        <i class="fa fa-comment"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="vert-align">4</td>
-                                <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
-                                <td class="vert-align active text-center">2</td>
-                                <td class="vert-align">
-                                    <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
-                                        <i class="fa fa-comment"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="vert-align">5</td>
-                                <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
-                                <td class="vert-align active text-center">2</td>
-                                <td class="vert-align">
-                                    <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
-                                        <i class="fa fa-comment"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            {% for key, user in topD %}
+                                <tr>
+                                    <td class="vert-align">{{ key+1 }}</td>
+                                    <td class="vert-align" style="text-transform: capitalize;"><img src="{% if user.fid != '' %}http://graph.facebook.com/{{ user.fid }}/picture?width=20&height=20{% else %}http://placehold.it/20x20&text=&nbsp;{% endif %}" class="img-circle"> <a href="{{ path('user-profile-public', {username: user.username}) }}">{{ user.name }}</a></td>
+                                    <td class="vert-align active text-center">{{ user.nb ? : 0 }}</td>
+                                    <td class="vert-align">
+                                        <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose" onclick="popForm('{{ user.userId }}', '{{ user.date }}');">
+                                            <i class="fa fa-comment"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -226,7 +117,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="modal" id="modalCompose" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -245,22 +135,37 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary ">Post <i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                    <button type="button" class="btn btn-primary " onclick="sendForm();">Post <i class="fa fa-arrow-circle-right fa-lg"></i></button>
                 </div>
             </div>
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <form action="{{ path('feed') }}" method="POST" id="commentForm">
+        <input type="hidden" name="fid" id="fid" value="" />
+        <input type="hidden" name="fdt" id="fdt" value="" />
+        <input type="hidden" name="comment" id="comment" value="" />
+    </form>
 {% endblock %}
 
 
 {% block footerjs %}
     {{ parent() }}
     <script>
+        function popForm(id, dt)
+        {
+            $('#commentForm #fid').val(id);
+            $('#commentForm #fdt').val(dt);
+        }
+        function sendForm()
+        {
+            $('#commentForm #comment').val($('#inputBody').val());
+            $('#commentForm').submit();
+        }
         $(function() {
             $('#modalCompose').on('shown.bs.modal', function () {
-                $('#myInput').focus()
+                $('#inputBody').focus()
             });
 
         });

@@ -40,5 +40,8 @@ $app['repository.counter'] = $app->share(function ($app) {
 $app['repository.series'] = $app->share(function ($app) {
     return new Days\Repository\Series($app['dbs']['100days'], $app['dbs']['100days']);
 });
+$app['repository.comment'] = $app->share(function ($app) {
+    return new Days\Repository\Comment($app['dbs']['100days'], $app['dbs']['100days']);
+});
 
 return $app;

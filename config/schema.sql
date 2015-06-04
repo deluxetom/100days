@@ -27,6 +27,20 @@ CREATE TABLE `series` (
   `userId` int(10) unsigned NOT NULL,
   `date` date NOT NULL,
   `nb` smallint(4) unsigned NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`userId`,`date`),
   CONSTRAINT `series_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment` (
+  `userId` int(10) unsigned NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `comment` text NOT NULL,
+  `forUserId` int(10) unsigned NOT NULL,
+  `forDate` date NOT NULL,
+  PRIMARY KEY (`userId`,`timestamp`),
+  KEY `forUserId` (`forUserId`),
+  CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE,
+  CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`forUserId`) REFERENCES `user` (`userId`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

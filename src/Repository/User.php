@@ -48,4 +48,15 @@ class User extends Repository
         }
         return $users;
     }
+
+    public function topFive($date)
+    {
+        $query = "SELECT u.userId, u.username, u.name, u.fid, s.nb, s.date
+                  FROM user AS u
+                  LEFT JOIN series AS s ON u.userId=s.userId AND s.date='$date'
+                  ORDER BY s.nb DESC, u.userId ASC LIMIT 5";
+        $statement = $this->dbRead->prepare($query);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
 }
