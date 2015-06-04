@@ -63,6 +63,7 @@ class FeedController implements ControllerProviderInterface
                     $user = $app['repository.user']->findByPk($comment['userId']);
                     $serie['comments'][] = ['user' => $user, 'comment' => $comment['comment']];
                 }
+                rsort($serie['comments']);
 
                 if (count($series) > 0) {
                     $tmp = [];
