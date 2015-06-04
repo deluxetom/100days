@@ -12,7 +12,7 @@ class FeedController implements ControllerProviderInterface
     {
         if ($forUserId = $request->get('fid')) {
             $forDate = $request->get('fdt');
-            $comment = $request->get('comment');
+            $comment = strip_tags($request->get('comment'));
             if ($comment != '') {
                 $app['repository.comment']->insert([
                     'userId'    => $app['session']->get('userId'),
@@ -37,7 +37,7 @@ class FeedController implements ControllerProviderInterface
 
         $lastDate = [];
         $comments = [];
-        $tmpCom = $app['repository.comment']->findAll(['forDate'=>'0000-00-00'], [], ['timestamp'=>'DESC']);
+        $tmpCom = $app['repository.comment']->findAll(['forDate'=>'0000-00-00'], [], ['timestamp'=>'ASC']);
         for ($c=0;$c<count($tmpCom);$c++) {
             if (isset($comments[date("Y-m-d", strtotime($tmpCom[$c]['timestamp']))][$tmpCom[$c]['forUserId']])) {
                 $comments[date("Y-m-d", strtotime($tmpCom[$c]['timestamp']))][$tmpCom[$c]['forUserId']][] = $tmpCom[$c];
@@ -63,7 +63,6 @@ class FeedController implements ControllerProviderInterface
                     $user = $app['repository.user']->findByPk($comment['userId']);
                     $serie['comments'][] = ['user' => $user, 'comment' => $comment['comment']];
                 }
-                rsort($serie['comments']);
 
                 if (count($series) > 0) {
                     $tmp = [];

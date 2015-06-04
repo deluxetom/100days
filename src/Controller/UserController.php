@@ -122,7 +122,7 @@ class UserController implements ControllerProviderInterface
         if ($forUserId = $request->get('fid')) {
             $forDate = $request->get('fdt');
             $username = $request->get('usn');
-            $comment = $request->get('comment');
+            $comment = strip_tags($request->get('comment'));
             if ($comment != '') {
                 $app['repository.comment']->insert([
                     'userId'    => $app['session']->get('userId'),
