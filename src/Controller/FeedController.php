@@ -35,6 +35,55 @@ class FeedController implements ControllerProviderInterface
             $series[$s]['comments'] = $comments;
         }
 
+        $lastDate = [];
+        $comments = [];
+        $tmpCom = $app['repository.comment']->findAll(['forDate'=>'0000-00-00'], [], ['timestamp'=>'DESC']);
+        for ($c=0;$c<count($tmpCom);$c++) {
+            if (isset($comments[date("Y-m-d", strtotime($tmpCom[$c]['timestamp']))][$tmpCom[$c]['forUserId']])) {
+                $comments[date("Y-m-d", strtotime($tmpCom[$c]['timestamp']))][$tmpCom[$c]['forUserId']][] = $tmpCom[$c];
+            } else {
+                $comments[date("Y-m-d", strtotime($tmpCom[$c]['timestamp']))][$tmpCom[$c]['forUserId']] = [$tmpCom[$c]];
+                $lastDate[date("Y-m-d", strtotime($tmpCom[$c]['timestamp']))][$tmpCom[$c]['forUserId']] = $tmpCom[$c]['timestamp'];
+            }
+        }
+        foreach ($lastDate as $date => $tab) {
+            foreach ($tab as $forUserId => $timestamp) {
+                $forUser = $app['repository.user']->findByPk($forUserId);
+                $serie = [
+                    'userId' => $forUserId,
+                    'username' => $forUser['username'],
+                    'name' => $forUser['name'],
+                    'fid' => $forUser['fid'],
+                    'nb' => 0,
+                    'date' => '0000-00-00',
+                    'timestamp' => $timestamp,
+                    'comments' => [],
+                ];
+                foreach ($comments[$date][$forUserId] as $comment) {
+                    $user = $app['repository.user']->findByPk($comment['userId']);
+                    $serie['comments'][] = ['user' => $user, 'comment' => $comment['comment']];
+                }
+
+                if (count($series) > 0) {
+                    $tmp = [];
+                    for ($s = 0; $s < count($series); $s++) {
+                        if ($s == 0 && $serie['timestamp'] > $series[$s]['timestamp']) {
+                            $tmp[] = $serie;
+                            $tmp[] = $series[$s];
+                        } else if (!isset($series[$s + 1]) || ($serie['timestamp'] <= $series[$s]['timestamp'] && $serie['timestamp'] > $series[$s + 1]['timestamp'])) {
+                            $tmp[] = $series[$s];
+                            $tmp[] = $serie;
+                        } else {
+                            $tmp[] = $series[$s];
+                        }
+                    }
+                    $series = $tmp;
+                } else {
+                    $series[] = $serie;
+                }
+            }
+        }
+
         return $app['twig']->render('feed.html.twig', array(
             'topY' => $topY,
             'topD' => $topD,

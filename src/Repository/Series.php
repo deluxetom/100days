@@ -10,11 +10,10 @@ class Series extends Repository
 
     public function feed($nbDays = 3)
     {
-        $query = "SELECT u.userId, u.username, u.name, u.fid, s.nb, s.date
+        $query = "SELECT u.userId, u.username, u.name, u.fid, s.nb, s.date, s.timestamp
                   FROM user AS u, series AS s
-                  WHERE u.userId=s.userId AND s.date BETWEEN '" . date("Y-m-d", strtotime("- $nbDays days")) . "' AND '" . date("Y-m-d") . "'
+                  WHERE u.userId=s.userId
                   ORDER BY s.date DESC, s.timestamp DESC";
-
         $statement = $this->dbRead->prepare($query);
         $statement->execute();
         return $statement->fetchAll();

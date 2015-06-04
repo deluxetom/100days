@@ -22,8 +22,8 @@
                                     <div class="media-body">
                                         <h5 class="media-heading pull-left" style="text-transform: capitalize;">{{ serie.name }}</h5>
                                         <div class="comment-info pull-right">
-                                            <div class="btn btn-info btn-xs"><i class="fa fa-trophy"></i> {{ serie.nb }}</div>
-                                            <div class="btn btn-default btn-xs"><i class="fa fa-clock-o"></i> {{ serie.date|date('F jS') }}</div>
+                                            {% if serie.nb > 0 %}<div class="btn btn-info btn-xs"><i class="fa fa-trophy"></i> {{ serie.nb }}</div>{% endif %}
+                                            <div class="btn btn-default btn-xs"><i class="fa fa-clock-o"></i> {{ serie.timestamp|date('F jS') }}</div>
                                             <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose" onclick="popForm('{{ serie.userId }}', '{{ serie.date }}');">
                                                 <i class="fa fa-comment"></i>
                                             </button>
@@ -35,7 +35,7 @@
                                             {% if key != 0  %}
                                         <hr />
                                             {% endif %}
-                                        <h5 style="text-transform: capitalize;">{{ comment.user.name }} <br> <small>{{ comment.comment }}</small></h5>
+                                        <h5><span style="text-transform: capitalize;">{{ comment.user.name }}</span> <br> <small>{{ comment.comment }}</small></h5>
                                         {% endfor %}
                                     </div>
                                     {% endif %}
