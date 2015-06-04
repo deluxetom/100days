@@ -1,0 +1,269 @@
+{% extends "layout.html.twig" %}
+{% set active_page = "feed" %}
+
+{% block title %}News Feed{% endblock %}
+
+{% block content %}
+    <h1>News Feed</h1><hr class="colorgraph"><br>
+
+    <div class="row">
+        <div class="col-md-8 col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+<!-- feed -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <ul class="media-list comments">
+
+                                <li class="media">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object img-circle img-thumbnail" src="http://graph.facebook.com/dlxtom/picture?width=50&height=50" width="50">
+                                    </a>
+                                    <div class="media-body">
+                                        <h5 class="media-heading pull-left">Thomas Picquet</h5>
+                                        <div class="comment-info pull-right">
+                                            <div class="btn btn-info btn-xs"><i class="fa fa-trophy"></i> 3</div>
+                                            <div class="btn btn-default btn-xs"><i class="fa fa-clock-o"></i> June 8th</div>
+                                            <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                                <i class="fa fa-comment"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="well">
+
+                                        <h5>Cyril Legrand <br> <small>Comment goes here</small></h5>
+                                        <hr>
+                                        <h5>Andrea Bach <br> <small>Suck deez nuts</small></h5>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object img-circle img-thumbnail" src="http://graph.facebook.com/dlxtom/picture?width=50&height=50" width="50">
+                                    </a>
+                                    <div class="media-body">
+                                        <h5 class="media-heading pull-left">Thomas Picquet</h5>
+                                        <div class="comment-info pull-right">
+                                            <div class="btn btn-info btn-xs"><i class="fa fa-trophy"></i> 3</div>
+                                            <div class="btn btn-default btn-xs"><i class="fa fa-clock-o"></i> June 8th</div>
+                                            <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                                <i class="fa fa-comment"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object img-circle img-thumbnail" src="http://graph.facebook.com/dlxtom/picture?width=50&height=50" width="50">
+                                    </a>
+                                    <div class="media-body">
+                                        <h5 class="media-heading pull-left">Thomas Picquet</h5>
+                                        <div class="comment-info pull-right">
+                                            <div class="btn btn-info btn-xs"><i class="fa fa-trophy"></i> 3</div>
+                                            <div class="btn btn-default btn-xs"><i class="fa fa-clock-o"></i> June 8th</div>
+                                            <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                                <i class="fa fa-comment"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- /feed -->
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xs-12">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <h3>Today's Top 5</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th class="text-center">100s</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="vert-align">1</td>
+                                    <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
+                                    <td class="vert-align active text-center">2</td>
+                                    <td class="vert-align">
+                                        <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                            <i class="fa fa-comment"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="vert-align">2</td>
+                                    <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
+                                    <td class="vert-align active text-center">2</td>
+                                    <td class="vert-align">
+                                        <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                            <i class="fa fa-comment"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="vert-align">3</td>
+                                    <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
+                                    <td class="vert-align active text-center">2</td>
+                                    <td class="vert-align">
+                                        <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                            <i class="fa fa-comment"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="vert-align">4</td>
+                                    <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
+                                    <td class="vert-align active text-center">2</td>
+                                    <td class="vert-align">
+                                        <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                            <i class="fa fa-comment"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="vert-align">5</td>
+                                    <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
+                                    <td class="vert-align active text-center">2</td>
+                                    <td class="vert-align">
+                                        <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                            <i class="fa fa-comment"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <h3>Yesterday's Top 5</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th class="text-center">100s</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="vert-align">1</td>
+                                <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
+                                <td class="vert-align active text-center">2</td>
+                                <td class="vert-align">
+                                    <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                        <i class="fa fa-comment"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="vert-align">2</td>
+                                <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
+                                <td class="vert-align active text-center">2</td>
+                                <td class="vert-align">
+                                    <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                        <i class="fa fa-comment"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="vert-align">3</td>
+                                <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
+                                <td class="vert-align active text-center">2</td>
+                                <td class="vert-align">
+                                    <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                        <i class="fa fa-comment"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="vert-align">4</td>
+                                <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
+                                <td class="vert-align active text-center">2</td>
+                                <td class="vert-align">
+                                    <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                        <i class="fa fa-comment"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="vert-align">5</td>
+                                <td class="vert-align" style="text-transform: capitalize;"><img src="http://graph.facebook.com/dlxtom/picture?width=20&height=20" class="img-circle"> <a href="#">Thomas Picquet</a></td>
+                                <td class="vert-align active text-center">2</td>
+                                <td class="vert-align">
+                                    <button type="button" class="btn btn-xs btn-outline btn-primary" data-toggle="modal" data-target="#modalCompose">
+                                        <i class="fa fa-comment"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="modalCompose" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Write a Comment</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-12" for="inputBody">Message</label>
+                            <div class="col-sm-12"><textarea class="form-control" id="inputBody" rows="8"></textarea></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary ">Post <i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}
+
+
+{% block footerjs %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $('#modalCompose').on('shown.bs.modal', function () {
+                $('#myInput').focus()
+            });
+
+        });
+
+    </script>
+{% endblock %}

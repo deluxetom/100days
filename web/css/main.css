@@ -70,3 +70,23 @@ BODY{
 .table tbody>tr>td.vert-align{
     vertical-align: middle;
 }
+
+.comments .media-heading {
+    margin-top: 16px;
+}
+
+.comments .comment-info {
+    margin-left: 10px;
+    margin-top: 12px;
+}
+
+.comments .media .well {
+    margin-left: 25px;
+    padding: 5px 10px;
+    margin-bottom: 0px;
+    margin-top: 2px;
+}
+
+.comments .media .well hr {
+    margin: 5px 0;
+}

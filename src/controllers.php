@@ -24,6 +24,7 @@ $app->mount('/user', new Days\Controller\UserController);
 $app->mount('/counter', new Days\Controller\CounterController);
 $app->mount('/series', new Days\Controller\SeriesController);
 $app->mount('/leaderboard', new Days\Controller\LeaderboardController);
+$app->mount('/feed', new Days\Controller\FeedController);
 
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {

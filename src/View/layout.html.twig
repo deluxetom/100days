@@ -47,6 +47,7 @@
             {% if app.security.token is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
             <ul class="nav navbar-nav">
                 <li{% if active_page == 'dashboard' %} class="active" {% endif %}><a href="{{ path('homepage') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
+                <li{% if active_page == 'feed' %} class="active" {% endif %}><a href="{{ path('feed') }}"><i class="fa fa-rss fa-fw"></i> News Feed</a></li>
                 <li{% if active_page == 'leaderboard' %} class="active" {% endif %}><a href="{{ path('leaderboard') }}"><i class="fa fa-sort-amount-desc fa-fw"></i> Leaderboard</a></li>
                 <li><a href="https://www.facebook.com/groups/452077894955810/" target="_blank"><i class="fa fa-facebook fa-fw"></i> Facebook Group</a></li>
             </ul>
