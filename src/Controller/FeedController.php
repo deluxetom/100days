@@ -46,6 +46,7 @@ class FeedController implements ControllerProviderInterface
                 $lastDate[date("Y-m-d", strtotime($tmpCom[$c]['timestamp']))][$tmpCom[$c]['forUserId']] = $tmpCom[$c]['timestamp'];
             }
         }
+
         foreach ($lastDate as $date => $tab) {
             foreach ($tab as $forUserId => $timestamp) {
                 $forUser = $app['repository.user']->findByPk($forUserId);
@@ -67,10 +68,10 @@ class FeedController implements ControllerProviderInterface
                 if (count($series) > 0) {
                     $tmp = [];
                     for ($s = 0; $s < count($series); $s++) {
-                        if ($s == 0 && $serie['timestamp'] > $series[$s]['timestamp']) {
+                        if ($s == 0 && $serie['timestamp'] < $series[$s]['timestamp']) {
                             $tmp[] = $serie;
                             $tmp[] = $series[$s];
-                        } else if (!isset($series[$s + 1]) || ($serie['timestamp'] <= $series[$s]['timestamp'] && $serie['timestamp'] > $series[$s + 1]['timestamp'])) {
+                        } else if (!isset($series[$s + 1]) || ($serie['timestamp'] >= $series[$s]['timestamp'] && $serie['timestamp'] < $series[$s + 1]['timestamp'])) {
                             $tmp[] = $series[$s];
                             $tmp[] = $serie;
                         } else {
@@ -83,7 +84,7 @@ class FeedController implements ControllerProviderInterface
                 }
             }
         }
-
+        
         return $app['twig']->render('feed.html.twig', array(
             'topY' => $topY,
             'topD' => $topD,
