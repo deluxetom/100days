@@ -28,7 +28,7 @@ class FeedController implements ControllerProviderInterface
 
         $series = $app['repository.series']->feed();
         for ($s=0;$s<count($series);$s++) {
-            $comments = $app['repository.comment']->findAll(['forDate'=>$series[$s]['date'], 'forUserId'=>$series[$s]['userId']],[],['timestamp'=>'DESC']);
+            $comments = $app['repository.comment']->findAll(['forDate'=>$series[$s]['date'], 'forUserId'=>$series[$s]['userId']],[],['timestamp'=>'ASC']);
             for ($c=0;$c<count($comments);$c++) {
                 $comments[$c]['user'] = $app['repository.user']->findByPk($comments[$c]['userId']);
             }
