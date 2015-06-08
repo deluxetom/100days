@@ -98,7 +98,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for key, user in topD %}
+                            {% for key, user in topY %}
                                 <tr>
                                     <td class="vert-align">{{ key+1 }}</td>
                                     <td class="vert-align" style="text-transform: capitalize;"><img src="{% if user.fid != '' %}http://graph.facebook.com/{{ user.fid }}/picture?width=20&height=20{% else %}http://placehold.it/20x20&text=&nbsp;{% endif %}" class="img-circle"> <a href="{{ path('user-profile-public', {username: user.username}) }}">{{ user.name }}</a></td>
