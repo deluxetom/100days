@@ -49,7 +49,14 @@
                 <li{% if active_page == 'dashboard' %} class="active" {% endif %}><a href="{{ path('homepage') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
                 <li{% if active_page == 'feed' %} class="active" {% endif %}><a href="{{ path('feed') }}"><i class="fa fa-rss fa-fw"></i> News Feed</a></li>
                 <li{% if active_page == 'leaderboard' %} class="active" {% endif %}><a href="{{ path('leaderboard') }}"><i class="fa fa-sort-amount-desc fa-fw"></i> Leaderboard</a></li>
-                <li><a href="https://www.facebook.com/groups/452077894955810/" target="_blank"><i class="fa fa-facebook fa-fw"></i> Facebook Group</a></li>
+                <li><a href="https://www.facebook.com/groups/452077894955810/" target="_blank"><i class="fa fa-facebook fa-fw"></i> FB Group</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe fa-fw"></i> The Girl Effect <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="http://www.girleffect.org/about/" target="_blank"><i class="fa fa-info-circle"></i> About</a></li>
+                        <li><a href="http://www.globalgiving.org/fundraisers/14772/" target="_blank"><i class="fa fa-heart"></i> Donate!</a></li>
+                    </ul>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown active">
