@@ -1,6 +1,7 @@
 <?php
 
 use Silex\Application;
+use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Predis\Silex\ClientsServiceProvider;
@@ -13,8 +14,10 @@ use Silex\Provider\ServiceControllerServiceProvider;
 use Silex\Provider\SwiftmailerServiceProvider;
 
 $app = new Application();
-$app->register(new DoctrineServiceProvider());
+$app->register(new HttpFragmentServiceProvider());
+$app->register(new ServiceControllerServiceProvider());
 $app->register(new TwigServiceProvider());
+$app->register(new DoctrineServiceProvider());
 $app->register(new SecurityServiceProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new RememberMeServiceProvider());
