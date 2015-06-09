@@ -15,7 +15,6 @@ use Silex\Provider\SwiftmailerServiceProvider;
 
 $app = new Application();
 $app->register(new HttpFragmentServiceProvider());
-$app->register(new ServiceControllerServiceProvider());
 $app->register(new TwigServiceProvider());
 $app->register(new DoctrineServiceProvider());
 $app->register(new SecurityServiceProvider());
