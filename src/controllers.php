@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 $app->before(function () use ($app) {
-    if ($token = $app['security']->getToken()) {
+    if ($token = $app['security.token_storage']->getToken()) {
         $app['session']->start();
         if (!$app['session']->get('name')) {
             // get account's info > name, timezone etc (from an account repo)
