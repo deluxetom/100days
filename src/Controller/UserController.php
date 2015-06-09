@@ -29,7 +29,7 @@ class UserController implements ControllerProviderInterface
             //$username = $request->get('username');
             //$email    = $request->get('email');
             $password = $request->get('password');
-            $fid = $request->get('fid');
+            $fid = str_replace('http://www.facebook.com/', '', $request->get('fid'));
 
             if (!$name) {
                 $error[] = "Invalid Name";

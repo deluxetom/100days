@@ -27,7 +27,7 @@ class LoginController implements ControllerProviderInterface
             $action   = 'register';
             $name     = $request->get('name');
             $username = $request->get('username');
-            $fid      = $request->get('fid');
+            $fid      = str_replace('http://www.facebook.com/', '', $request->get('fid'));
             $email    = $request->get('email');
             $password = $request->get('password');
             $confirmPassword = $request->get('confirm-password');
