@@ -15,7 +15,7 @@ class SeriesController implements ControllerProviderInterface
             if (isset($counter['userId'])) {
                 $app['repository.series']->increment('nb', intVal($nb), ['userId' => $app['session']->get('userId'), 'date' => $date]);
             } else {
-                $app['repository.series']->insert(['userId' => $app['session']->get('userId'), 'date' => $date, 'nb' => intVal($nb)]);
+                $app['repository.series']->insert(['userId' => $app['session']->get('userId'), 'date' => $date, 'timestamp' => $date . date(" H:i:s"), 'nb' => intVal($nb)]);
             }
         }
         $series = [];
