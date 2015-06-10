@@ -26,7 +26,7 @@ class FeedController implements ControllerProviderInterface
         $topY = $app['repository.user']->topFive(date("Y-m-d", strtotime('- 1 day')));
         $topD = $app['repository.user']->topFive(date("Y-m-d"));
 
-        $series = $app['repository.series']->feed();
+        $series = $app['repository.series']->feed(4);
         for ($s=0;$s<count($series);$s++) {
             $comments = $app['repository.comment']->findAll(['forDate'=>$series[$s]['date'], 'forUserId'=>$series[$s]['userId']],[],['timestamp'=>'ASC']);
             for ($c=0;$c<count($comments);$c++) {
@@ -37,7 +37,7 @@ class FeedController implements ControllerProviderInterface
 
         $lastDate = [];
         $comments = [];
-        $tmpCom = $app['repository.comment']->findAll(['forDate'=>'0000-00-00'], [], ['timestamp'=>'DESC']);
+        $tmpCom = $app['repository.comment']->feed(4);
         for ($c=0;$c<count($tmpCom);$c++) {
             if (isset($comments[date("Y-m-d", strtotime($tmpCom[$c]['timestamp']))][$tmpCom[$c]['forUserId']])) {
                 $comments[date("Y-m-d", strtotime($tmpCom[$c]['timestamp']))][$tmpCom[$c]['forUserId']][] = $tmpCom[$c];
