@@ -12,20 +12,28 @@ use Doctrine\DBAL\Connection;
 class UserProvider implements UserProviderInterface
 {
     private $conn;
+    private $redis;
 
-    public function __construct(Connection $conn)
+    public function __construct(Connection $conn, $predisClient)
     {
         $this->conn = $conn;
+        $this->redis = $predisClient;
     }
 
     public function loadUserByUsername($username)
     {
-        $stmt = $this->conn->executeQuery('SELECT * FROM user WHERE username = ?', array(strtolower($username)));
-
-        if (!$user = $stmt->fetch()) {
-            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
+        if (!$user = unserialize($this->redis->get('user:'.$username))) {
+            $stmt = $this->conn->executeQuery('SELECT * FROM user WHERE username = ?', array(strtolower($username)));
+            if (!$user = $stmt->fetch()) {
+                throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
+            }
+            $this->redis->set('user:'.$username, serialize($user));
+            $this->redis->expire('user:'.$username, 600);
         }
 
+        if ($user['enabled'] == 0) {
+            throw new UsernameNotFoundException('Account not validated');
+        }
         $user_roles = explode(',', $user['roles']);
         $authorized_roles = array('ROLE_ADMIN', 'ROLE_USER');
         $roles = array_intersect($user_roles, $authorized_roles);

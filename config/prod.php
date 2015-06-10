@@ -68,7 +68,7 @@ $app['security.firewalls'] = array(
         ),
         'logout' => array('logout_path' => '/logout'),
         'users' => $app->share(function () use ($app) {
-            return new Days\Security\UserProvider($app['dbs']['100days']);
+            return new Days\Security\UserProvider($app['dbs']['100days'], $app['predis']['session']);
         }),
     ),
 );
