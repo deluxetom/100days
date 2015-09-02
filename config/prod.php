@@ -56,6 +56,7 @@ $app['session.storage.options'] = array(
 $app['security.firewalls'] = array(
     'profiler' => array('pattern' => '^/(_(profiler|wdt)|css|images|js)/'),
     'login' => array('pattern' => '^/login/$'),
+    'amsterdam' => array('pattern' => '^/amsterdam/?$'),
     'default' => array(
         'pattern' => '^.*$',
         'remember_me' => array(

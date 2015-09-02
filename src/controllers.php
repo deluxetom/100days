@@ -26,6 +26,11 @@ $app->mount('/series', new Days\Controller\SeriesController);
 $app->mount('/leaderboard', new Days\Controller\LeaderboardController);
 $app->mount('/feed', new Days\Controller\FeedController);
 
+$app->match('/amsterdam/', function () use ($app) {
+    return $app['twig']->render('amsterdam.html.twig', array());
+})
+->bind('amsterdam');
+
 $app->error(function (\Exception $e, $code) use ($app) {
     if ($app['debug']) {
         return;
